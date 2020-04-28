@@ -1,0 +1,100 @@
+{
+  "author": "AngkorW",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "dependencies": {
+    "@aspnet/signalr": "^1.1.4",
+    "axios": "0.18.1",
+    "bulma": "^0.8.2",
+    "cache-loader": "^4.1.0",
+    "clipboard": "2.0.4",
+    "codemirror": "5.45.0",
+    "d3": "^5.15.1",
+    "driver.js": "0.9.5",
+    "dropzone": "5.5.1",
+    "echarts": "4.2.1",
+    "element-ui": "2.7.0",
+    "file-saver": "2.0.1",
+    "fuse.js": "3.4.4",
+    "handsontable": "^7.4.2",
+    "js-cookie": "2.2.0",
+    "jsonlint": "^1.6.3",
+    "jszip": "3.2.1",
+    "less-loader": "^5.0.0",
+    "normalize.css": "7.0.0",
+    "nprogress": "0.2.0",
+    "path-to-regexp": "2.4.0",
+    "rxjs": "6.5.5",
+    "screenfull": "4.2.0",
+    "showdown": "^1.9.1",
+    "sortablejs": "1.8.4",
+    "tui-editor": "1.3.3",
+    "vue": "2.6.10",
+    "vue-count-to": "1.0.13",
+    "vuedraggable": "2.20.0",
+    "vue-router": "3.0.2",
+    "vue-splitpane": "1.0.4",
+    "vuex": "3.1.0",
+    "xlsx": "0.14.1"
+  },
+  "description": "abp-vnext-vue-admin",
+  "devDependencies": {
+    "@babel/core": "7.0.0",
+    "@babel/register": "7.0.0",
+    "@vue/cli-plugin-babel": "3.5.3",
+    "@vue/cli-plugin-unit-jest": "^4.3.1",
+    "@vue/cli-service": "^4.3.1",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "autoprefixer": "^9.5.1",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^25.3.0",
+    "chalk": "2.4.2",
+    "chokidar": "2.1.5",
+    "connect": "3.6.6",
+    "html-webpack-plugin": "3.2.0",
+    "husky": "1.3.1",
+    "mockjs": "1.0.1-beta3",
+    "node-sass": "^4.9.0",
+    "plop": "2.3.0",
+    "runjs": "^4.3.2",
+    "sass-loader": "^7.1.0",
+    "script-ext-html-webpack-plugin": "2.1.3",
+    "script-loader": "^0.7.2",
+    "serve-static": "^1.13.2",
+    "svgo": "1.2.0",
+    "svg-sprite-loader": "4.1.3",
+    "vue-template-compiler": "2.6.10"
+  },
+  "engines": {
+    "node": ">=8.9",
+    "npm": ">= 3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "keywords": [
+    "vue",
+    "admin",
+    "abp",
+    "element-ui",
+    "abp-vnext",
+    "aspnet.core",
+    ".net core"
+  ],
+  "name": "abp-vnext-vue-admin",
+  "scripts": {
+    "build:prod": "vue-cli-service build",
+    "build:stage": "vue-cli-service build --mode staging",
+    "dev": "vue-cli-service serve",
+    "new": "plop",
+    "preview": "node build/index.js --preview",
+    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
+    "test:ci": "npm run lint && npm run test:unit",
+    "test:unit": "jest --clearCache && vue-cli-service test:unit"
+  },
+  "version": "1.1.1"
+}
