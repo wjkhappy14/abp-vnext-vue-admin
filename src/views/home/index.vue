@@ -1,19 +1,16 @@
 <template>
   <div class="app-container">
     <div slot="header">
+      <router-link to="/news">ABP</router-link>
+      <router-link to="/about">关于</router-link>
+      <router-link to="/login">登录</router-link>
+    </div>
+    <h1 style="text-align:center">Hello ABP VNext</h1>
+    <div class="box-item">
+      <span class="field-label">切换主题 </span>
+      <el-switch v-model="theme" />
 
     </div>
-    <el-card class="box-card">
-      <div class="box-item">
-        <router-link to="/news">新闻动态</router-link>
-        <router-link to="/about">关于我们</router-link>
-        <span class="field-label">Change Theme : </span>
-        <el-switch v-model="theme" />
-        <aside style="margin-top:15px;">
-          Tips: It is different from the theme-pick on for details.
-        </aside>
-      </div>
-    </el-card>
     <transition name="fade" mode="out-in">
       <router-view>
       </router-view>
@@ -95,6 +92,49 @@
         slideValue: 50,
         radio: 3
       }
+    },
+    beforeCreate: () => {
+
+    },
+    created: () => {
+
+    },
+    beforeMount: () => {
+
+
+    },
+    mounted: () => {
+
+
+    },
+    beforeUpdate: () => {
+
+    },
+    updated: () => {
+
+
+    },
+    beforeDestroy: () => {
+
+    },
+    destroyed: () => {
+
+
+    },
+    activated: () => {
+
+    },
+    deactivated: () => {
+
+
+    },
+    errorCaptured: () => {
+
+
+    },
+    serverPrefetch: () => {
+
+
     },
     watch: {
       theme() {

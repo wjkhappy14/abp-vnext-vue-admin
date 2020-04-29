@@ -14,7 +14,6 @@
       InitializeVue
     },
     created() {
-      console.log(stencil);
     },
     methods: {
       ...mapActions({

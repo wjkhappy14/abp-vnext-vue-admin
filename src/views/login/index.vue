@@ -8,7 +8,7 @@
              label-position="left">
 
       <div class="title-container">
-        <h4 style="text-align:center">灵图慧视</h4>
+        <h4 style="text-align:center">Hello ABP VNext</h4>
         <div class="title">
           <h3>>登录<</h3>
         </div>
@@ -72,14 +72,14 @@
     data() {
       const validateUsername = (rule, value, callback) => {
         if (!validUsername(value)) {
-          callback(new Error('Please enter the correct user name'))
+          callback(new Error('请输入有效的Email'))
         } else {
           callback()
         }
       }
       const validatePassword = (rule, value, callback) => {
         if (value.length < 6) {
-          callback(new Error('The password can not be less than 6 digits'))
+          callback(new Error('登录密码不能少于6个字符'))
         } else {
           callback()
         }

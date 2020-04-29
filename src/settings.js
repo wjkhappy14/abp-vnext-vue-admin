@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'ABP-VNext管理',
+  title: 'ABP VNext管理',
 
   /**
    * @type {boolean} true | false
