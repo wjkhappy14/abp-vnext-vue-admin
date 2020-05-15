@@ -19,14 +19,12 @@
     },
     methods: {
       ...mapActions({
-        getUsers: "identity/user/getUsers",
-        getRoles: "identity/role/getRoles",
+      
       })
     }
     ,
     created() {
-      this.getUsers();
-      this.getRoles();
+    
     }
   }
 </script>

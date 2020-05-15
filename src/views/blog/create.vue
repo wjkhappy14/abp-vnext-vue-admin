@@ -3,11 +3,11 @@
     <span class="action-text">{{actionText}}</span>
     <el-form label-position="left" label-width="80px" :model="article">
       <el-form-item label="标题">
-        <el-input v-model="article.title"></el-input>
+        <el-input v-model="article.name"></el-input>
       </el-form-item>
 
       <el-form-item label="摘要">
-        <el-input v-model="article.digest"></el-input>
+        <el-input v-model="article.description"></el-input>
       </el-form-item>
       <el-form-item label="发布时间">
         <el-date-picker v-model="article.publishDate"
@@ -37,11 +37,11 @@
       </el-form-item>
 
       <el-form-item label="备注">
-        <el-input v-model="article.comment"></el-input>
+        <el-input v-model="article.shortName"></el-input>
       </el-form-item>
 
       <el-form-item label="详细内容">
-        <tinymce v-model="article.content" :height="300">
+        <tinymce v-model="article.description" :height="300">
         </tinymce>
       </el-form-item>
 
@@ -74,9 +74,9 @@
         uploadActionUri: "http://192.168.3.47:6543/api/contents/files/image/upload",
         article: {
           id: 0,
-          title: "",
-          digest: "",
-          imageUrl: "",
+          name: "",
+          shortName: "",
+          description: "",
           isPublished: true,
           publishDate: '',
           comment: "",
@@ -89,8 +89,8 @@
       return form;
     },
     created() {
-      var id = this.$route.params.id || 0;
-      if (id > 0) {
+      var id = this.$route.params.id;
+      if (id != '') {
         this.actionText = "修改新闻动态";
         this.getItem({ id: id }).then(item => {
           this.article = item;

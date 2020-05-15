@@ -1,10 +1,11 @@
 <script>
   import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
   export default {
-    name: 'Initialize',
+    name: 'identity-init',
     created() {
-      const hash = window.location.search.slice(1);
-     // this.getCountries();
+      const hash = window.location.search.slice(1)
+      this.getUsers();
+      this.getRoles();
     },
     computed: {
       ...mapState(["docs/article/count"]),
@@ -14,10 +15,11 @@
     },
     methods: {
       ...mapMutations({
-      
+
       }),
       ...mapActions({
-        getCountries: "region/getCountries"
+        getUsers: "identity/user/getUsers",
+        getRoles: "identity/role/getRoles",
       })
     },
     render: function (h) {

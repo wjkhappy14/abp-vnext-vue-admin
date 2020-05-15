@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Layout from '@/layout'
+import identityRoutes from './identity'
 export const constantRoutes = [
   {
     path: '/',
@@ -36,9 +37,9 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/article',
+    path: '/blog',
     component: Layout,
-    redirect: '/article/index',
+    redirect: '/blog/index',
     beforeEnter: (to, from, next) => {
       next();
     },
@@ -49,13 +50,13 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/article/index'),
+        component: () => import('@/views/blog/index'),
         name: 'article',
         meta: { title: '新闻动态', icon: 'guide', noCache: true }
       },
       {
         path: 'create ',
-        component: () => import('@/views/article/create'),
+        component: () => import('@/views/blog/create'),
         name: 'create',
         meta: { title: '发布动态', icon: 'pdf', affix: false }
       }
@@ -74,7 +75,8 @@ export const constantRoutes = [
         meta: { title: '我的', icon: 'user', noCache: true }
       }
     ]
-  }
+  },
+  identityRoutes
 ]
 
 

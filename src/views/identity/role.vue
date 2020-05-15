@@ -82,7 +82,6 @@
     },
     methods: {
       ...mapActions({
-       
         deleteRole: "identity/role/deleteRole",
         addRole: "identity/role/addRole",
         updateRole: "identity/role/updateRole",

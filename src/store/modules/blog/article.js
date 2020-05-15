@@ -1,5 +1,5 @@
 import bus from '@/utils/bus'
-import { getItems, create, update, deleteItem } from '@/api/docs/article'
+import { getItems, create, update, deleteItem } from '@/api/blog/article'
 import { range } from "rxjs";
 import { map, filter } from "rxjs/operators";
 
@@ -49,8 +49,13 @@ const actions = {
     })
   },
 
-  getItems({ commit }) {
-    return getItems({type:2}).then(response => {
+  getItems({ commit }, query) {
+    return getItems({
+      type: query.type,
+      begin: query.range[0],
+      end: query.range[1]
+    }).then(response => {
+
       commit('setItems', response.items);
       range(1, 10)
         .pipe(

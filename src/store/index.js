@@ -12,7 +12,7 @@ import policy from './modules/policy'
 import settings from './modules/settings'
 import tagsView from './modules/tagsView'
 import menu from './modules/menu'
-import docs from './modules/docs'
+import blog from './modules/blog'
 import region from './modules/region'
 
 const store = new Vuex.Store({
@@ -26,7 +26,7 @@ const store = new Vuex.Store({
     identity,
     policy,
     menu,
-    docs,
+    blog,
     region
   }
 })
