@@ -14,6 +14,7 @@ import tagsView from './modules/tagsView'
 import menu from './modules/menu'
 import blogging from './modules/blogging'
 import region from './modules/region'
+import permission from './modules/permission/index'
 
 const store = new Vuex.Store({
   modules: {
@@ -27,7 +28,8 @@ const store = new Vuex.Store({
     policy,
     menu,
     blogging,
-    region
+    region,
+    permission
   }
 })
 

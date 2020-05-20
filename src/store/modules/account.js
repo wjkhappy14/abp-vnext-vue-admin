@@ -1,9 +1,9 @@
 import { login, logout, getMyProfile } from '@/api/account'
 import router, { resetRouter } from '@/router'
-import { setToken } from '@/utils/auth'
+import { setToken, getToken } from '@/utils/auth'
 
 const state = {
-  token: '',
+  token: getToken(),
   id: '',
   name: '',
   avatar: '',

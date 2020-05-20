@@ -6,6 +6,13 @@ const state = {
 const getters = {
   permissions: (state) => {
     return state.items;
+  },
+  grantedKeys: (state) => {
+    var keys = [];
+    state.items.forEach((item, index, array) => {
+      keys.push(item.name);
+    });
+    return keys;
   }
 }
 const mutations = {
@@ -18,7 +25,7 @@ const actions = {
   update({ commit }, permission) {
     return new Promise((resolve, reject) => {
       update(permission).then(response => {
-        commit('setItems', response.items)
+        commit('setItems', response.groups)
         resolve()
       }).catch(error => {
         reject(error)
@@ -26,8 +33,11 @@ const actions = {
     })
   },
 
-  getPermissions({ }, options) {
-    return fetchList(options);
+  getPermissions({ commit }, provider) {
+    fetchList(provider)
+      .then(response => {
+        commit('setItems', response.groups);
+      });
   }
 }
 
@@ -35,5 +45,6 @@ export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
+  getters
 }

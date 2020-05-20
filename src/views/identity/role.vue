@@ -34,6 +34,7 @@
                  show-checkbox
                  node-key="name"
                  accordion
+                 :default-checked-keys="grantedKeys"
                  ref="tree"
                  :props="props">
         </el-tree>
@@ -58,7 +59,6 @@
           disabled: 'isGranted',
           children: 'permissions'
         },
-        permissions: [],
         form: {},
         dialogVisible: false,
         dialogType: 'new',
@@ -71,8 +71,9 @@
       },
       //...mapState(["identity/role/token"]),
       ...mapGetters({
-        roles: 'identity/role/roles'
-
+        roles: 'identity/role/roles',
+        permissions: 'permission/permissions',
+        grantedKeys: 'permission/grantedKeys'
       })
 
     },
@@ -85,7 +86,7 @@
         getRoles: 'identity/role/getRoles',
         addRole: "identity/role/addRole",
         updateRole: "identity/role/updateRole",
-        getPermissions: "identity/grant/getPermissions",
+        getPermissions: "permission/getPermissions",
       }),
       ...mapMutations({
         toggleUserFlag: "role/toggleUserFlag"
@@ -101,9 +102,9 @@
       handleEdit(row) {
         this.getPermissions({
           providerName: "R",
-          providerKey: 'admin'
-        }).then(result => {
-          this.permissions = result.groups;
+          providerKey: row.name,
+          id: row.id
+        }).then(() => {
         });
         this.dialogType = 'edit'
         this.dialogVisible = true
@@ -134,7 +135,7 @@
       },
       async updateRoleHandler() {
         var checkedNodes = this.$refs.tree.getCheckedNodes();
-        debugger;
+
         const isEdit = this.dialogType === 'edit'
         if (isEdit) {
           await this.updateRole(this.form)
