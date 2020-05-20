@@ -4,17 +4,17 @@
     name: 'Initialize',
     created() {
       const hash = window.location.search.slice(1);
-     // this.getCountries();
+      // this.getCountries();
     },
     computed: {
-      ...mapState(["docs/article/count"]),
+      ...mapState(["blog/index/count"]),
       ...mapGetters({
-        items: 'docs/article/items'
+        items: 'blog/index/items'
       })
     },
     methods: {
       ...mapMutations({
-      
+
       }),
       ...mapActions({
         getCountries: "region/getCountries"

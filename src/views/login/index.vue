@@ -91,8 +91,8 @@
           tenanId: "",
           loading: false,
           grant_type: "password",
-          scope: "XManagement",
-          client_id: "XManagement_App",
+          scope: "Magic",
+          client_id: "Magic_Web",
           client_secret: "1q2w3e*"
         },
         loginRules: {
@@ -162,7 +162,7 @@
             this.$store.dispatch('account/login', this.loginForm)
               .then(() => {
                 this.$router.push({
-                  path: this.redirect || '/article',
+                  path: this.redirect || '/blog/index',
                   query: this.otherQuery
                 })
                 this.loading = false

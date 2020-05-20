@@ -79,11 +79,7 @@
           description: "",
           isPublished: true,
           publishDate: '',
-          comment: "",
-          scope: "",
-          category: 0,
-          content:
-            `<h1 style="text-align: center;">灵图慧视智能!</h1><img title="灵图慧视智能" src="http://www.lintsense.com/images/slide-14-.jpg"  width="120" height="100" />`
+          comment: ""
         }
       }
       return form;
@@ -108,9 +104,9 @@
     },
     methods: {
       ...mapActions({
-        updateItem: "docs/article/updateItem",
-        addItem: "docs/article/addItem",
-        getItem: "docs/article/getItem"
+        updateItem: "blogging/blog/updateItem",
+        addItem: "blogging/blog/addItem",
+        getItem: "blogging/blog/getItem"
       }),
       beforeUpload: function (file) {
         request.post(this.uploadActionUri, file).then(x => {

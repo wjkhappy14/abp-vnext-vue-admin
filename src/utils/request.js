@@ -5,13 +5,13 @@ import store from '@/store'
 const service = axios.create({
   baseURL: "http://106.13.130.51:80",//process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 10 * 1000 // request timeout
+  timeout: 100 * 1000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
-    if (store.getters.token == "") {
+    if (store.state.account.token == "") {
     }
     else {
 

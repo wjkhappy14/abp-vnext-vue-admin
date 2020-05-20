@@ -82,10 +82,12 @@
       })
     },
     created() {
+      this.getUsers();
     },
     methods: {
       ...mapActions({
-        addUser: "identity/user/addUser"
+        addUser: "identity/user/addUser",
+        getUsers: "identity/user/getUsers"
       }),
       deleteItem: function (item) {
 

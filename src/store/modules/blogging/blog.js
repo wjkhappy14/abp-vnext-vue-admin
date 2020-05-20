@@ -1,5 +1,5 @@
 import bus from '@/utils/bus'
-import { getItems, create, update, deleteItem } from '@/api/blog/article'
+import { getItems, create, update, deleteItem } from '@/api/blogging/blog'
 import { range } from "rxjs";
 import { map, filter } from "rxjs/operators";
 

@@ -44,21 +44,28 @@ export const constantRoutes = [
       next();
     },
     meta: {
-      title: '动态管理',
+      title: '主题管理',
       icon: 'chart'
     },
     children: [
       {
         path: 'index',
-        component: () => import('@/views/blog/index'),
-        name: 'article',
-        meta: { title: '新闻动态', icon: 'guide', noCache: true }
+        component: () => import('@/views/blogging/blog/list'),
+        name: 'list',
+        meta: { title: '主题动态', icon: 'guide', noCache: true }
+      },
+      {
+        path: 'item ',
+        hidden: true,
+        component: () => import('@/views/blogging/blog/item'),
+        name: 'detail',
+        meta: { title: '详细信息', icon: 'pdf', affix: false }
       },
       {
         path: 'create ',
-        component: () => import('@/views/blog/create'),
+        component: () => import('@/views/blogging/blog/create'),
         name: 'create',
-        meta: { title: '发布动态', icon: 'pdf', affix: false }
+        meta: { title: '发布主题', icon: 'pdf', affix: false }
       }
     ]
   },

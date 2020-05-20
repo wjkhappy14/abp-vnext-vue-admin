@@ -29,22 +29,15 @@
     </el-table>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'修改角色':'创建角色'">
-      <el-form :model="form" label-width="80px" label-position="left">
-        <el-form-item label="角色名称">
-          <el-input v-model="form.name" placeholder="角色名称" />
-        </el-form-item>
-        <el-form-item label="设置权限">
-            <div v-for='(item,index) in permissions'>
-              <span> <b>{{ item.displayName }}</b></span>
-              <div style="display:inline-block">
-                <el-checkbox-group v-for='(item,index) in item.permissions'>
-                  <el-checkbox :label="item.displayName" name="type">
-                  </el-checkbox>
-                </el-checkbox-group>
-              </div>
-            </div>
-        </el-form-item>
-</el-form>
+      <div>
+        <el-tree :data="permissions"
+                 show-checkbox
+                 node-key="name"
+                 accordion
+                 ref="tree"
+                 :props="props">
+        </el-tree>
+      </div>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">取消</el-button>
         <el-button type="primary" @click="updateRoleHandler">保存</el-button>
@@ -60,6 +53,11 @@
   export default {
     data() {
       return {
+        props: {
+          label: 'displayName',
+          disabled: 'isGranted',
+          children: 'permissions'
+        },
         permissions: [],
         form: {},
         dialogVisible: false,
@@ -74,15 +72,17 @@
       //...mapState(["identity/role/token"]),
       ...mapGetters({
         roles: 'identity/role/roles'
+
       })
 
     },
     created() {
-     
+      this.getRoles();
     },
     methods: {
       ...mapActions({
         deleteRole: "identity/role/deleteRole",
+        getRoles: 'identity/role/getRoles',
         addRole: "identity/role/addRole",
         updateRole: "identity/role/updateRole",
         getPermissions: "identity/grant/getPermissions",
@@ -99,11 +99,11 @@
 
       },
       handleEdit(row) {
-          this.getPermissions({
+        this.getPermissions({
           providerName: "R",
           providerKey: 'admin'
         }).then(result => {
-          this.permissions = result[0].groups;
+          this.permissions = result.groups;
         });
         this.dialogType = 'edit'
         this.dialogVisible = true
@@ -133,7 +133,8 @@
           })
       },
       async updateRoleHandler() {
-      
+        var checkedNodes = this.$refs.tree.getCheckedNodes();
+        debugger;
         const isEdit = this.dialogType === 'edit'
         if (isEdit) {
           await this.updateRole(this.form)
@@ -147,10 +148,10 @@
           title: '操作成功',
           dangerouslyUseHTMLString: true,
           message: `
-            <div>Role Key: ${key}</div>
-            <div>Role Name: ${name}</div>
-            <div>Description: ${description}</div>
-          `,
+              <div>Role Key: ${key}</div>
+              <div>Role Name: ${name}</div>
+              <div>Description: ${description}</div>
+            `,
           type: 'success'
         })
       }
