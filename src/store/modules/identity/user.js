@@ -9,6 +9,16 @@ const state = {
 const getters = {
   items: (state) => {
     return state.items;
+  },
+  names: (state) => {
+    var items = state.items.map((item) => {
+      return {
+        id: item.id,
+        name: item.name
+      }
+    });
+    debugger;
+    return items;
   }
 }
 const mutations = {

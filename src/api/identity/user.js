@@ -8,13 +8,14 @@ export function login(data) {
 export function getMyProfile() {
   return request({
     url: '/api/identity/my-profile',
-    method: 'get'
+    method: 'GET'
   })
 }
 export function getUsers() {
   return request({
     url: '/api/identity/users',
-    method: 'get'
+    method: 'GET',
+    params: { MaxResultCount: 999 }
   })
 }
 
@@ -22,14 +23,14 @@ export function getUsers() {
 export function addUser() {
   return request({
     url: '/api/identity/users',
-    method: 'get'
+    method: 'POST'
   })
 }
 
 export function updateUser() {
   return request({
     url: '/api/identity/users',
-    method: 'get'
+    method: 'PUT'
   })
 }
 

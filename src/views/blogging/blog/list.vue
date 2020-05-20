@@ -108,7 +108,8 @@
     computed: {
       ...mapState(["blogging/blog/count"]),
       ...mapGetters({
-        items: 'blogging/blog/items'
+        items: 'blogging/blog/items',
+        names: 'identity/user/names',
       })
     },
     created() {
