@@ -4,12 +4,14 @@
     name: 'Initialize',
     created() {
       const hash = window.location.search.slice(1);
-      // this.getCountries();
+      this.getItems({
+        range: []
+      });
     },
     computed: {
-      ...mapState(["blog/index/count"]),
+      ...mapState(["blogging/blog/count"]),
       ...mapGetters({
-        items: 'blog/index/items'
+        items: 'blogging/blog/items'
       })
     },
     methods: {
@@ -17,7 +19,7 @@
 
       }),
       ...mapActions({
-        getCountries: "region/getCountries"
+        getItems: "blogging/blog/getItems"
       })
     },
     render: function (h) {

@@ -1,60 +1,43 @@
 <template>
   <div class="app-container">
     <div slot="header">
-      <router-link to="/news">ABP</router-link>
+      <router-link to="/news">
+        <el-button type="primary" icon="el-icon-search">
+          Hello ABP
+        </el-button>
+      </router-link>
       <router-link to="/about">关于</router-link>
-      <router-link to="/login">登录</router-link>
-    </div>
-    <h1 style="text-align:center">Hello ABP VNext</h1>
-    <div class="box-item">
-      <span class="field-label">切换主题 </span>
-      <el-switch v-model="theme" />
-
+      <router-link to="/login">
+        <b>登录</b>
+      </router-link>
+      <span class="field-label">切换主题 <el-switch v-model="theme" /></span>
     </div>
     <transition name="fade" mode="out-in">
       <router-view>
       </router-view>
     </transition>
-    <div class="block">
-      <el-button type="primary" icon="el-icon-edit" />
-      <el-button type="primary" icon="el-icon-delete" />
-      <el-button type="primary" icon="el-icon-search">
-        Search
-      </el-button>
-      <el-button type="primary">
-        Upload
-        <i class="el-icon-upload el-icon-right" />
-      </el-button>
-    </div>
-
-    <div class="block">
-      <el-tag v-for="tag in tags" :key="tag.type" :type="tag.type" class="tag-item">
-        {{ tag.name }}
-      </el-tag>
-    </div>
-
-    <div class="block">
-      <el-radio-group v-model="radio">
-        <el-radio :label="3">
-          Option A
-        </el-radio>
-        <el-radio :label="6">
-          Option B
-        </el-radio>
-        <el-radio :label="9">
-          Option C
-        </el-radio>
-      </el-radio-group>
-    </div>
-
-    <div class="block">
-      <el-slider v-model="slideValue" />
+    <div>
+      <el-row :gutter="20">
+        <el-col :span="5" v-for="(item, index) in items" :key="id">
+          <el-card :body-style="{ padding: '0px' }" shadow="always">
+            <img src="@/assets/imgs/hello.jpg" class="image">
+            <div style="padding: 14px;">
+              <span>{{item.name}}</span>
+              <div class="bottom clearfix">
+                <time class="time">{{ item }}</time>
+                <el-button type="text" class="button">发表见解</el-button>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
 
 <script>
   import { toggleClass } from '@/utils'
+  import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
   import '@/assets/custom-theme/index.css' // the theme changed version element-ui css
   export default {
     name: 'home',
@@ -66,6 +49,12 @@
 
 
       });
+    },
+    computed: {
+      ...mapState(["blogging/blog/count"]),
+      ...mapGetters({
+        items: 'blogging/blog/items'
+      })
     },
     beforeRouteUpdate(to, from, next) {
       // 在当前路由改变，但是该组件被复用时调用
@@ -81,16 +70,7 @@
     },
     data() {
       return {
-        theme: false,
-        tags: [
-          { name: 'Tag One', type: '' },
-          { name: 'Tag Two', type: 'info' },
-          { name: 'Tag Three', type: 'success' },
-          { name: 'Tag Four', type: 'warning' },
-          { name: 'Tag Five', type: 'danger' }
-        ],
-        slideValue: 50,
-        radio: 3
+        theme: false
       }
     },
     beforeCreate: () => {
@@ -149,15 +129,8 @@
 </script>
 
 <style scoped>
-
   .field-label {
     vertical-align: middle;
-  }
-
-  .box-card {
-    width: 400px;
-    max-width: 100%;
-    margin: 20px auto;
   }
 
   .block {
@@ -166,5 +139,35 @@
 
   .tag-item {
     margin-right: 15px;
+  }
+
+  .time {
+    font-size: 13px;
+    color: #999;
+  }
+
+  .bottom {
+    margin-top: 13px;
+    line-height: 12px;
+  }
+
+  .button {
+    padding: 0;
+    float: right;
+  }
+
+  .image {
+    width: 25%;
+    display: block;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+
+  .clearfix:after {
+    clear: both
   }
 </style>

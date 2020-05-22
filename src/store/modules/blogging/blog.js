@@ -51,7 +51,6 @@ const actions = {
 
   getItems({ commit }, query) {
     return getItems({
-      type: query.type,
       begin: query.range[0],
       end: query.range[1]
     }).then(response => {
