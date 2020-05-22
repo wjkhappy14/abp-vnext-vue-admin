@@ -1,15 +1,19 @@
 <template>
-  <div class="app-container">
-    <h1>关于我们</h1>
-    <el-tabs type="border-card">
-      <el-tab-pane label="groups">
-        <groups />
-      </el-tab-pane>
-      <el-tab-pane label="channels">
-        <channels />
-      </el-tab-pane>
-    </el-tabs>
+  <div class="columns">
+    <div class="column">
+      <h1>关于我们</h1>
+    </div>
+    <div class="column">
+      <h1>1</h1>
+    </div>
+    <div class="column">
+      <h1>2</h1>
+    </div>
+    <div class="column">
+      <h1>3</h1>
+    </div>
   </div>
+
 </template>
 
 <script>

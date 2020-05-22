@@ -1,6 +1,17 @@
 <template>
-  <div class="app-container">
-    <h1>新闻动态</h1>
+  <div class="columns">
+    <div class="column">
+      <h1>新闻动态</h1>
+    </div>
+    <div class="column">
+      <h1>1</h1>
+    </div>
+    <div class="column">
+      <h1>2</h1>
+    </div>
+    <div class="column">
+      <h1>3</h1>
+    </div>
   </div>
 </template>
 
@@ -9,7 +20,7 @@
   export default {
     name: 'news',
     filters: {
-     
+
     },
     data() {
       return {

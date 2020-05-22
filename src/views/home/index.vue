@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <section class="hero is-medium is-primary is-bold">
     <div slot="header">
       <router-link to="/news">
         <el-button type="primary" icon="el-icon-search">
@@ -18,7 +18,7 @@
     </transition>
     <div>
       <el-row :gutter="20">
-        <el-col :span="5" v-for="(item, index) in items" :key="id">
+        <el-col :span="5" v-for="(item, index) in items" :key="item.id">
           <el-card :body-style="{ padding: '0px' }" shadow="always">
             <img src="@/assets/imgs/hello.jpg" class="image">
             <div style="padding: 14px;">
@@ -32,7 +32,7 @@
         </el-col>
       </el-row>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -129,6 +129,7 @@
 </script>
 
 <style scoped>
+
   .field-label {
     vertical-align: middle;
   }
