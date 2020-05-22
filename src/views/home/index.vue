@@ -1,38 +1,90 @@
 <template>
-  <section class="hero is-medium is-primary is-bold">
-    <div slot="header">
-      <router-link to="/news">
-        <el-button type="primary" icon="el-icon-search">
-          Hello ABP
-        </el-button>
-      </router-link>
-      <router-link to="/about">关于</router-link>
-      <router-link to="/login">
-        <b>登录</b>
-      </router-link>
-      <span class="field-label">切换主题 <el-switch v-model="theme" /></span>
-    </div>
-    <transition name="fade" mode="out-in">
-      <router-view>
-      </router-view>
-    </transition>
-    <div>
-      <el-row :gutter="20">
-        <el-col :span="5" v-for="(item, index) in items" :key="item.id">
-          <el-card :body-style="{ padding: '0px' }" shadow="always">
-            <img src="@/assets/imgs/hello.jpg" class="image">
-            <div style="padding: 14px;">
-              <span>{{item.name}}</span>
-              <div class="bottom clearfix">
-                <time class="time">{{ item }}</time>
-                <el-button type="text" class="button">发表见解</el-button>
-              </div>
+  <div>
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="">
+          <img src="@/assets/imgs/AngkorW-WeChat.jpg" width="60" height="60">
+        </a>
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            ABP
+          </a>
+          <a class="navbar-item">
+            文档
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              更多
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                <router-link to="/about">关于</router-link>
+              </a>
+              <a class="navbar-item">
+                <router-link to="/news">
+                  动态
+                </router-link>
+              </a>
+              <a class="navbar-item">
+                Contact
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item">
+                <span class="field-label">切换主题 <el-switch v-model="theme" /></span>
+              </a>
             </div>
-          </el-card>
-        </el-col>
-      </el-row>
-    </div>
-  </section>
+          </div>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong>注册</strong>
+              </a>
+              <a class="button is-light">
+                <router-link to="/login">
+                  <b>登录</b>
+                </router-link>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero is-medium is-primary is-bold">
+      <transition name="fade" mode="out-in">
+        <router-view>
+        </router-view>
+      </transition>
+      <div>
+        <el-row :gutter="20">
+          <el-col :span="5" v-for="(item, index) in items" :key="item.id">
+            <el-card :body-style="{ padding: '0px' }" shadow="always">
+              <img src="@/assets/imgs/hello.jpg" class="image">
+              <div style="padding: 14px;">
+                <span>{{item.name}}</span>
+                <div class="bottom clearfix">
+                  <time class="time">{{ item }}</time>
+                  <el-button type="text" class="button">发表见解</el-button>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
