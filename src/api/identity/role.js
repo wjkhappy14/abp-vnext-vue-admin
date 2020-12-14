@@ -7,11 +7,8 @@ export function getRoles() {
   })
 }
 export function addRole(data) {
-  return request({
-    url: '/api/identity/roles',
-    method: 'POST',
-    data
-  })
+  debugger;
+  return request.post('/api/identity/roles', data)
 }
 
 

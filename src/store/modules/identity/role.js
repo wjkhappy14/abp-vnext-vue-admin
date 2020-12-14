@@ -15,9 +15,9 @@ const mutations = {
 }
 
 const actions = {
-  addRole({ commit }, permission) {
+  addRole({ commit }, role) {
     return new Promise((resolve, reject) => {
-      addRole(permission).then(response => {
+      addRole(role).then(response => {
         commit('setItems', response.items)
         resolve()
       }).catch(error => {

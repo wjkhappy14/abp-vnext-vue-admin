@@ -20,10 +20,9 @@
           <a class="navbar-item">
             文档
           </a>
-
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
-              更多
+              设计模式
             </a>
             <div class="navbar-dropdown">
               <a class="navbar-item">
@@ -35,7 +34,7 @@
                 </router-link>
               </a>
               <a class="navbar-item">
-                Contact
+                发现
               </a>
               <hr class="navbar-divider">
               <a class="navbar-item">

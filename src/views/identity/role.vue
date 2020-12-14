@@ -59,6 +59,12 @@
           disabled: 'isGranted',
           children: 'permissions'
         },
+        role: {
+          name: 'ABCD',
+          isDefault: true,
+          isStatic: true,
+          isPublic: true,
+        },
         form: {},
         dialogVisible: false,
         dialogType: 'new',
