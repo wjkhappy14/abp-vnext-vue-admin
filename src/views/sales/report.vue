@@ -1,116 +1,61 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-input v-model="listQuery.title"
-                placeholder="Title"
-                style="width: 200px;"
-                class="filter-item"
-                @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
+    <span v-for='(item,index) in queryItems'>
+      <label>{{item.text}}</label>
+      <el-select placeholder="请选择" style="width: 120px" class="filter-item"
+                 v-model="searchOptions[item.key]"
+                 :key="item.key"
+                 :name="item.key"
+                 @change="changeHandler($event,item.key)">
+        <el-option v-for="option in item.options"
+                   :key="option"
+                   :label="option"
+                   :value="option" />
       </el-select>
-      <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
-      </el-select>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-      </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        搜索
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        添加
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        导出
-      </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox>
-    </div>
+    </span>
+    <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+      搜索
+    </el-button>
+    <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+      添加
+    </el-button>
+    <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+      导出Excel
+    </el-button>
+    <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
+      启用时间段
+    </el-checkbox>
 
     <el-table :key="tableKey"
-              v-loading="listLoading"
-              :data="list"
+              v-loading="loading"
+              :data="source.items"
               border
               fit
               highlight-current-row
               style="width: 100%;"
-              @sort-change="sortChange">
-      <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
-        <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
-        </template>
+              @sort-change="sortHandler">
+      <el-table-column type="index" width="60">
       </el-table-column>
-      <el-table-column label="creationTime" width="180px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.creationTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="name" width="100px" align="left">
-        <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
-          <span>{{ row.name}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Description" width="150px" align="left">
-        <template slot-scope="{row}">
-          <span>{{ row.description }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="signKey" width="350px" align="center">
-        <template slot-scope="{row}">
-          <span style="color:red;">{{ row.signKey }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Readings" align="center" width="120">
-        <template slot-scope="{row}">
-          <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
-          <span v-else>0</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="isLock" class-name="status-col" width="100">
-        <template slot-scope="{row}">
-          <el-checkbox :checked="row.isLock"></el-checkbox>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-            发布
-          </el-button>
-          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-            草稿
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus(row,'deleted')">
-            删除
-          </el-button>
-        </template>
+      <el-table-column :label="item.text"
+                       :key="item.name"
+                       :prop="item.name" v-for='(item,index) in allColumns' align="center" :class-name="getSortClass('id')">
       </el-table-column>
     </el-table>
-
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="source.count>0"
+                :total="source.count"
+                :page.sync="page.index"
+                :limit.sync="page.limit"
+                @pagination="search" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="Type" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-          </el-select>
         </el-form-item>
         <el-form-item label="Date" prop="timestamp">
           <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item label="Title" prop="title">
           <el-input v-model="temp.title" />
-        </el-form-item>
-        <el-form-item label="Status">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
         </el-form-item>
         <el-form-item label="Imp">
           <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
@@ -142,26 +87,13 @@
 </template>
 
 <script>
-  import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/sales/report'
-  import waves from '@/directive/waves' // waves directive
+  import waves from '@/directive/waves'
   import { parseTime } from '@/utils'
-  import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-
-  const calendarTypeOptions = [
-    { key: 'CN', display_name: 'China' },
-    { key: 'US', display_name: 'USA' },
-    { key: 'JP', display_name: 'Japan' },
-    { key: 'EU', display_name: 'Eurozone' }
-  ]
-
-  // arr to obj, such as { CN : "China", US : "USA" }
-  const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-    acc[cur.key] = cur.display_name
-    return acc
-  }, {})
+  import Pagination from '@/components/Pagination'
+  import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
 
   export default {
-    name: 'ComplexTable',
+    name: 'dynamic-table',
     components: { Pagination },
     directives: { waves },
     filters: {
@@ -180,21 +112,11 @@
     data() {
       return {
         tableKey: 0,
-        list: null,
-        total: 0,
-        listLoading: true,
-        listQuery: {
-          page: 1,
-          limit: 20,
-          importance: undefined,
-          title: undefined,
-          type: undefined,
-          sort: '+id'
+        loading: false,
+        page: {
+          index: 1,
+          limit: 20
         },
-        importanceOptions: [1, 2, 3],
-        calendarTypeOptions,
-        sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-        statusOptions: ['published', 'draft', 'deleted'],
         showReviewer: false,
         temp: {
           id: undefined,
@@ -221,24 +143,44 @@
         downloadLoading: false
       }
     },
+    computed: {
+      searchOptions: {
+        get() {
+          return this.$store.state.sale.report.search;
+        },
+        set(val) {
+          console.info(val);
+        }
+      },
+      routesData() {
+        return this.routes
+      },
+      ...mapState(
+        {
+          defects: "sale/report/defects"
+        }),
+      ...mapGetters({
+        queryItems: 'sale/report/select',
+        allColumns: 'sale/report/allColumns',
+        source: 'sale/report/source'
+      })
+    },
     created() {
-      this.getList()
+      this.init().then(x => {
+        this.search().then(() => {
+          setTimeout(() => {
+            this.loading = false
+          }, 1.5 * 1000)
+        });
+      });
     },
     methods: {
-      getList() {
-        this.listLoading = true
-        fetchList(this.listQuery).then(response => {
-          this.list = response.items
-          this.total = 100;//response.total
-
-          setTimeout(() => {
-            this.listLoading = false
-          }, 1.5 * 1000)
-        })
-      },
+      ...mapActions({
+        init: "sale/report/init",
+        search: "sale/report/search"
+      }),
       handleFilter() {
-        this.listQuery.page = 1
-        this.getList()
+        this.search();
       },
       handleModifyStatus(row, status) {
         this.$message({
@@ -247,19 +189,9 @@
         })
         row.status = status
       },
-      sortChange(data) {
-        const { prop, order } = data
-        if (prop === 'id') {
-          this.sortByID(order)
-        }
-      },
-      sortByID(order) {
-        if (order === 'ascending') {
-          this.listQuery.sort = '+id'
-        } else {
-          this.listQuery.sort = '-id'
-        }
-        this.handleFilter()
+      changeHandler(val, x) {
+        alert(val);
+        alert(x);
       },
       resetTemp() {
         this.temp = {
@@ -311,7 +243,7 @@
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             const tempData = Object.assign({}, this.temp)
-            tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+            tempData.timestamp = +new Date(tempData.timestamp)
             updateArticle(tempData).then(() => {
               for (const v of this.list) {
                 if (v.id === this.temp.id) {
@@ -370,13 +302,10 @@
           }
         }))
       },
+      sortHandler(sort) {
+
+      },
       getSortClass: function (key) {
-        const sort = this.listQuery.sort
-        return sort === `+${key}`
-          ? 'ascending'
-          : sort === `-${key}`
-            ? 'descending'
-            : ''
       }
     }
   }

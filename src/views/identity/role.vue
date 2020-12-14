@@ -34,11 +34,11 @@
                  show-checkbox
                  node-key="name"
                  accordion
-                 :default-checked-keys="grantedKeys"
                  ref="tree"
                  :props="props">
         </el-tree>
       </div>
+
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">取消</el-button>
         <el-button type="primary" @click="updateRoleHandler">保存</el-button>
@@ -59,12 +59,7 @@
           disabled: 'isGranted',
           children: 'permissions'
         },
-        role: {
-          name: 'ABCD',
-          isDefault: true,
-          isStatic: true,
-          isPublic: true,
-        },
+        permissions: [],
         form: {},
         dialogVisible: false,
         dialogType: 'new',
@@ -77,22 +72,22 @@
       },
       //...mapState(["identity/role/token"]),
       ...mapGetters({
-        roles: 'identity/role/roles',
-        permissions: 'permission/permissions',
-        grantedKeys: 'permission/grantedKeys'
+        roles: 'identity/role/roles'
       })
 
     },
     created() {
+    
       this.getRoles();
     },
     methods: {
       ...mapActions({
+        
+        getRoles: "identity/role/getRoles",
         deleteRole: "identity/role/deleteRole",
-        getRoles: 'identity/role/getRoles',
         addRole: "identity/role/addRole",
         updateRole: "identity/role/updateRole",
-        getPermissions: "permission/getPermissions",
+        getPermissions: "identity/grant/getPermissions",
       }),
       ...mapMutations({
         toggleUserFlag: "role/toggleUserFlag"
@@ -108,9 +103,9 @@
       handleEdit(row) {
         this.getPermissions({
           providerName: "R",
-          providerKey: row.name,
-          id: row.id
-        }).then(() => {
+          providerKey: 'admin'
+        }).then(result => {
+          this.permissions = result.groups;
         });
         this.dialogType = 'edit'
         this.dialogVisible = true
@@ -141,7 +136,7 @@
       },
       async updateRoleHandler() {
         var checkedNodes = this.$refs.tree.getCheckedNodes();
-
+        debugger;
         const isEdit = this.dialogType === 'edit'
         if (isEdit) {
           await this.updateRole(this.form)
@@ -155,10 +150,10 @@
           title: '操作成功',
           dangerouslyUseHTMLString: true,
           message: `
-              <div>Role Key: ${key}</div>
-              <div>Role Name: ${name}</div>
-              <div>Description: ${description}</div>
-            `,
+            <div>Role Key: ${key}</div>
+            <div>Role Name: ${name}</div>
+            <div>Description: ${description}</div>
+          `,
           type: 'success'
         })
       }

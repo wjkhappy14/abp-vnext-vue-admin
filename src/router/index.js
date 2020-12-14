@@ -4,68 +4,51 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Layout from '@/layout'
-import identityRoutes from './identity'
-export const constantRoutes = [
-  {
-    path: '/',
-    name: 'defalult',
-    redirect: '/home'
+import identityRoutes from './modules/identity'
+import workflowRouter from './modules/workflow'
+import diagnosticRouter from './modules/diagnostic'
+import productionRouter from './modules/production'
+import bloggingRouter from './modules/blogging'
+import financialRouter from './modules/financial'
+import permissionRouter from './modules/permission'
+import backgroundJobRouter from './modules/backgroundJob'
+import auditLoggingRouter from './modules/auditLogging'
+import identityServerRouter from './modules/identityServer'
 
-  },
+export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
   {
-    path: '/home',
-    component: () => import('@/views/home/index'),
-    hidden: true,
+    path: '/auth-redirect',
+    component: () => import('@/views/login/auth-redirect'),
+    hidden: true
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
     children: [
       {
-        path: '/news',
-        component: () => import('@/views/home/news/index'),
-        name: 'news',
-        meta: { title: '新闻动态', icon: 'theme' }
-      },
-      {
-        path: '/about',
-        component: () => import('@/views/home/about/index'),
-        name: 'about',
-        meta: { title: '关于我们', icon: 'theme' }
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: { title: 'Overviews', icon: 'dashboard', affix: true }
       }
     ]
   },
   {
-    path: '/blog',
+    path: '/guide',
     component: Layout,
-    redirect: '/blog/index',
-    beforeEnter: (to, from, next) => {
-      next();
-    },
-    meta: {
-      title: '主题管理',
-      icon: 'chart'
-    },
+    redirect: '/guide/index',
     children: [
       {
         path: 'index',
-        component: () => import('@/views/blogging/blog/list'),
-        name: 'list',
-        meta: { title: '主题动态', icon: 'guide', noCache: true }
-      },
-      {
-        path: 'item ',
-        hidden: true,
-        component: () => import('@/views/blogging/blog/item'),
-        name: 'detail',
-        meta: { title: '详细信息', icon: 'pdf', affix: false }
-      },
-      {
-        path: 'create ',
-        component: () => import('@/views/blogging/blog/create'),
-        name: 'create',
-        meta: { title: '发布主题', icon: 'pdf', affix: false }
+        component: () => import('@/views/guide/index'),
+        name: 'guide',
+        meta: { title: 'Guide', icon: 'guide', noCache: true }
       }
     ]
   },
@@ -78,35 +61,56 @@ export const constantRoutes = [
       {
         path: 'index',
         component: () => import('@/views/profile/index'),
-        name: 'Profile',
-        meta: { title: '我的', icon: 'user', noCache: true }
+        name: 'profile',
+        meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
-  },
-  identityRoutes
+  }
 ]
 
-
 export const asyncRoutes = [
+  workflowRouter,
+  diagnosticRouter,
+  identityRoutes,
+  backgroundJobRouter,
+  auditLoggingRouter,
+  identityServerRouter,
+  productionRouter,
+  bloggingRouter,
+  financialRouter,
+  permissionRouter,
   {
-    path: '/icon',
+    path: '/im',
     component: Layout,
     children: [
       {
         path: 'index',
-        component: () => import('@/views/workflow/index'),
-        name: 'Icons',
-        meta: { title: '工作流', icon: 'icon', noCache: true }
+        component: () => import('@/views/im/index'),
+        name: 'im',
+        meta: { title: 'SignalR', icon: 'theme' }
       }
     ]
   },
+  {
+    path: '/settings',
+    component: Layout,
+    hidden: false,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/Settings/index'),
+        name: 'settings',
+        meta: { title: 'Settings', icon: 'setting' }
+      }
+    ]
+  },
+  // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
-  scrollBehavior: () => (
-    { y: 0 }
-  ),
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 
@@ -114,6 +118,7 @@ const router = createRouter()
 
 export function resetRouter() {
   const newRouter = createRouter()
-  router.matcher = newRouter.matcher
+  router.matcher = newRouter.matcher // reset router
 }
+
 export default router

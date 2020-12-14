@@ -1,136 +1,57 @@
 <template>
-  <div class="app-container">
+  <div>
     <el-tabs v-model="activeName" @tab-click="tabClickHandler">
-      <el-tab-pane label="国家地区" name="country">
-        <el-table :data="countries" border highlight-current-row style="width:100%;margin-top:20px;">
-          <el-table-column prop="name" label="name" width="180">
-            <template slot-scope="{row}">
-              <span>{{ row.name }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="cmd" label="cmd" width="120">
-            <template slot-scope="{row}">
-              <span>{{ row.cmd }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="message" label="message" width="100">
-            <template slot-scope="{row}">
-              <span>{{ row.message }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column align="left" label="connectionId" width="200">
-            <template slot-scope="{row}">
-              <span>{{ row.connectionId }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column align="center" label="操作">
-            <template slot-scope="{row}">
-              <el-button type="success"
-                         size="small"
-                         icon="el-icon-circle-check-outline"
-                         @click="sendToGroup()">
-                发送到群组
-              </el-button>
-              <el-button type="primary"
-                         size="small"
-                         icon="el-icon-edit"
-                         @click="sendToConnection(row.connectionId)">
-                发送给此用户
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+      <el-tab-pane label="All" name="All" value="All">
+        <Country :items="country.items"></Country>
       </el-tab-pane>
-      <el-tab-pane label="州省" name="stateProvince">
-        <el-table :data="stateProvinces" border highlight-current-row style="width:100%;margin-top:20px;">
-          <el-table-column prop="name" label="name" width="180">
-            <template slot-scope="{row}">
-              <span>{{ row.stateProvinceName }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="cmd" label="cmd" width="120">
-            <template slot-scope="{row}">
-              <span>{{ row.countryId }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="message" label="message" width="200">
-            <template slot-scope="{row}">
-              <span>{{ row.chineseName }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column align="left" label="connectionId" width="200">
-            <template slot-scope="{row}">
-              <span>{{ row.stateProvinceCode }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column align="center" label="操作">
-            <template slot-scope="{row}">
-              <el-button type="success"
-                         size="small"
-                         icon="el-icon-circle-check-outline"
-                         @click="sendToGroup()">
-                编辑
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+      <el-tab-pane :label="continent" :name="continent" :key="continent" v-for="(continent, i) in country.continents">
+        <Country :items="items"></Country>
       </el-tab-pane>
-      <el-tab-pane label="城市" name="city">
-        <el-table :data="cities" border highlight-current-row style="width:100%;margin-top:20px;">
-          <el-table-column prop="name" label="城市名称" width="180">
-            <template slot-scope="{row}">
-              <span>{{ row.name }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="cmd" label="Id" width="120">
-            <template slot-scope="{row}">
-              <span>{{ row.id }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="message" label="中文名称" width="200">
-            <template slot-scope="{row}">
-              <span>{{ row.chineseName }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column align="left" label="所属省" width="200">
-            <template slot-scope="{row}">
-              <span>{{ row.stateProvinceId }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column align="center" label="操作">
-            <template slot-scope="{row}">
-              <el-button type="success"
-                         size="small"
-                         icon="el-icon-circle-check-outline"
-                         @click="sendToGroup()">
-                编辑
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+      <el-tab-pane  label="Chart" name="Chart" value="Chart">
+        <Population></Population>
       </el-tab-pane>
     </el-tabs>
+    <DetailDialog></DetailDialog>
+    <el-tooltip placement="top" content="Back To Top">
+      <back-to-top :custom-style="BackToTop" :visibility-height="300" :back-position="50" transition-name="fade" />
+    </el-tooltip>
   </div>
 </template>
 
 <script>
   import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
-
+  import Country from './components/Country'
+  import BackToTop from '@/components/BackToTop'
+  import DetailDialog from './components/DetailDialog'
+  import Population from './components/Population'
   export default {
     name: 'region',
     components: {
+      Country,
+      DetailDialog,
+      BackToTop,
+      Population
     },
     data() {
       return {
-        activeName: '',
-        countries: [],
-        stateProvinces: [],
-        cities: [],
+        activeName: 'All',
+        items: [],
+        BackToTop: {
+          right: '50px',
+          bottom: '50px',
+          width: '40px',
+          height: '40px',
+          'border-radius': '4px',
+          'line-height': '45px', // Please keep consistent with height to center vertically
+          background: '#e7eaf1'//The background color of the button
+        }
+
       }
     },
     computed: {
-      ...mapGetters([
-      ]),
+      ...mapGetters({
+        country: 'region/country'
+      }),
       ...mapState({
         users: state => state
       })
@@ -138,16 +59,11 @@
     mounted() {
 
     },
+    beforeRouteEnter(to, from, next) {
+      next();
+    },
     created() {
-      this.getStateProvinces().then(x => {
-        this.stateProvinces = x.items;
-      });
-      this.getCities().then(x => {
-        this.cities = x.items;
-      });
-      this.getCountries().then(x => {
-        this.countries = x.items;
-
+      this.getCountries().then(() => {
         this.$message({
           message: '加载成功.',
           type: 'warning'
@@ -155,25 +71,17 @@
       });
     },
     methods: {
+      ...mapMutations({
+        groupByContinent: "region/groupByContinent",
+      }),
       ...mapActions({
         getCountries: "region/getCountries",
-        getStateProvinces: "region/getStateProvinces",
-        getCities: "region/getCities",
+        delay: "region/delay"
       }),
       uploadSuccessHandler() {
-
-
       },
       tabClickHandler(evt) {
-        if (evt.paneName == 'country') {
-          this.getCountries();
-        }
-        else if (evt.paneName == 'stateProvince') {
-          this.getStateProvinces();
-        }
-        else if (evt.paneName == 'city') {
-          this.getCities();
-        }
+        this.items = this.country.groups[evt.name];
       },
       handleSuccess({ results, header }) {
         this.tableData = results

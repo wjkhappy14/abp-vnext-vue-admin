@@ -34,7 +34,9 @@ export default {
   },
   computed: {
     theme() {
-      return this.$store.state.settings.theme
+      var theme = this.$store.state.app.settings.theme
+      debugger;
+      return theme;
     }
   },
   watch: {

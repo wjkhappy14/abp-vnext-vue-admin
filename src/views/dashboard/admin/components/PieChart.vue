@@ -4,6 +4,7 @@
 
 <script>
   import echarts from 'echarts'
+  import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
   require('echarts/theme/macarons') // echarts theme
   import resize from './mixins/resize'
 
@@ -41,7 +42,12 @@
       this.chart = null
     },
     methods: {
+      ...mapActions({
+        defectCategories: "summary/defectCategories"
+      }),
+
       initChart() {
+        this.defectCategories();
         this.chart = echarts.init(this.$el, 'macarons')
 
         this.chart.setOption({
@@ -66,7 +72,7 @@
                 { value: 240, name: '科技' },
                 { value: 149, name: '外汇' },
                 { value: 100, name: '黄金' },
-                { value: 59, name: 'Forecasts' }
+                { value: 59, name: 'ABC' }
               ],
               animationEasing: 'cubicInOut',
               animationDuration: 2600

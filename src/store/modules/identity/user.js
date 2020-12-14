@@ -1,4 +1,4 @@
-import { addUser, getUsers, updateUser } from '@/api/identity/user'
+import { addUser, getUsers, updateUser } from '@/api/Identity/user'
 import { range } from "rxjs";
 import { map, filter } from "rxjs/operators";
 
@@ -9,16 +9,6 @@ const state = {
 const getters = {
   items: (state) => {
     return state.items;
-  },
-  names: (state) => {
-    var items = state.items.map((item) => {
-      return {
-        id: item.id,
-        name: item.name
-      }
-    });
-    debugger;
-    return items;
   }
 }
 const mutations = {

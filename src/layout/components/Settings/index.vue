@@ -1,16 +1,15 @@
 <template>
   <div class="drawer-container">
     <div>
-      <h3 class="drawer-title">偏好设置</h3>
-
+      <h3 class="drawer-title">Settings</h3>
       <div class="drawer-item">
-        <span>主题色</span>
+        <span>Theme</span>
         <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
       </div>
 
       <div class="drawer-item">
         <span>Open Tags-View</span>
-        <el-switch v-model="tagsView" class="drawer-switch" />
+        <el-switch v-model="fixedHeader" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
@@ -28,67 +27,69 @@
 </template>
 
 <script>
-import ThemePicker from '@/components/ThemePicker'
+  import ThemePicker from '@/components/ThemePicker'
 
-export default {
-  components: { ThemePicker },
-  data() {
-    return {}
-  },
-  computed: {
-    fixedHeader: {
-      get() {
-        return this.$store.state.settings.fixedHeader
-      },
-      set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'fixedHeader',
-          value: val
-        })
+  export default {
+    components: { ThemePicker },
+    data() {
+      return {
       }
     },
-    tagsView: {
-      get() {
-        return this.$store.state.settings.tagsView
+    computed: {
+      fixedHeader: {
+        get() {
+          return this.$store.state.app.settings.fixedHeader
+        },
+        set(val) {
+          this.$store.dispatch('app/changeSetting', {
+            key: 'fixedHeader',
+            value: val
+          })
+        }
       },
-      set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'tagsView',
-          value: val
-        })
+      tagsView: {
+        get() {
+          return this.$store.state.app.settings.tagsView
+        },
+        set(val) {
+          this.$store.dispatch('app/changeSetting', {
+            key: 'tagsView',
+            value: val
+          })
+        }
+      },
+      sidebarLogo: {
+        get() {
+          return this.$store.state.app.settings.sidebarLogo
+        },
+        set(val) {
+          this.$store.dispatch('app/changeSetting', {
+            key: 'sidebarLogo',
+            value: val
+          })
+        }
       }
     },
-    sidebarLogo: {
-      get() {
-        return this.$store.state.settings.sidebarLogo
-      },
-      set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'sidebarLogo',
+    methods: {
+      themeChange(val) {
+        this.$store.dispatch('app/changeSetting', {
+          key: 'theme',
           value: val
         })
       }
-    }
-  },
-  methods: {
-    themeChange(val) {
-      this.$store.dispatch('settings/changeSetting', {
-        key: 'theme',
-        value: val
-      })
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>
-.drawer-container {
-  padding: 24px;
-  font-size: 14px;
-  line-height: 1.5;
-  word-wrap: break-word;
+  .drawer-container {
+    padding: 24px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    .drawer-title
 
-  .drawer-title {
+  {
     margin-bottom: 12px;
     color: rgba(0, 0, 0, .85);
     font-size: 14px;
@@ -104,5 +105,5 @@ export default {
   .drawer-switch {
     float: right
   }
-}
+  }
 </style>

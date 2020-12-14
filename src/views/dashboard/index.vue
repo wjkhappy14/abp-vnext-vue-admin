@@ -6,6 +6,7 @@
 
 <script>
   import adminDashboard from './admin'
+  import { SocketAPI } from "@/utils/WsApi2";
   import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
   export default {
     name: 'Dashboard',
@@ -19,12 +20,13 @@
     },
     methods: {
       ...mapActions({
-      
+        menus: "menu/routerMenu",
       })
     }
     ,
     created() {
-    
+   
+      this.menus();
     }
   }
 </script>

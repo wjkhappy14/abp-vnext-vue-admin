@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function fetchList(query) {
   return request({
       url: '/api/app/channelRouter',
-    method: 'get',
+    method: 'GET',
     params: query
   })
 }
@@ -11,7 +11,7 @@ export function fetchList(query) {
 export function fetchArticle(id) {
   return request({
     url: '/article/detail',
-    method: 'get',
+    method: 'GET',
     params: { id }
   })
 }
@@ -19,7 +19,7 @@ export function fetchArticle(id) {
 export function fetchPv(pv) {
   return request({
       url: '/api/app/product/delete',
-    method: 'get',
+    method: 'GET',
     params: { pv }
   })
 }
@@ -27,7 +27,7 @@ export function fetchPv(pv) {
 export function create(data) {
   return request({
     url: '/article/create',
-    method: 'post',
+    method: 'POST',
     data
   })
 }
@@ -35,7 +35,7 @@ export function create(data) {
 export function update(data) {
   return request({
     url: '/article/update',
-    method: 'post',
+    method: 'POST',
     data
   })
 }

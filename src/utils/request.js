@@ -3,20 +3,21 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 
 const service = axios.create({
-  baseURL: "http://106.13.130.51:80",//process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: "http://106.13.130.51:7070",//process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 100 * 1000 // request timeout
+  timeout: 10 * 1000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
-    if (store.state.account.token == "") {
+    if (store.getters.token == "") {
     }
     else {
 
     }
     config.headers['Authorization'] = "Bearer " + store.state.account.token
+    // config.headers['xtenant'] = 'Mafeiyang'
     return config
   },
   error => {
@@ -37,12 +38,12 @@ service.interceptors.response.use(
         duration: 5 * 1000
       })
       if (res.code === 403 || res.code === 401) {
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
+        MessageBox.confirm('身份认证信息已经过期，请重新登录', '确认', {
+          confirmButtonText: '重新登录',
+          cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          store.dispatch('account/resetToken').then(() => {
+          store.dispatch('connect/endsession').then(() => {
             location.reload()
           })
         })

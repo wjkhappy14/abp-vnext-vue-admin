@@ -5,7 +5,7 @@
         <img v-if="logo" :src="logo" class="sidebar-logo">
         <h1 v-else class="sidebar-title">{{ title }} </h1>
       </router-link>
-      <router-link v-else key="expand" class="sidebar-logo-link" to="/article/index">
+      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
         <h1 class="sidebar-title">{{ title }} </h1>
       </router-link>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import logo from '@/assets/imgs/AngkorW-WeChat.jpg'
+  import logo from '@/assets/imgs/1.jpg'
 export default {
   name: 'SidebarLogo',
   props: {
@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      title: 'ABP-VNext管理',
+      title: 'ABP(VNext)',
       logo: logo + '?' + +new Date(),
     }
   }

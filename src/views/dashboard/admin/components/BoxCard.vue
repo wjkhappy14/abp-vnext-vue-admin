@@ -27,16 +27,10 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
   import PanThumb from '@/components/PanThumb'
   import Mallki from '@/components/TextHoverEffect/Mallki'
-
+  import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
   export default {
-    data() {
-      return {
-        avatar:''
-      }
-    },
     components: {
       PanThumb,
       Mallki
@@ -58,6 +52,12 @@
           pageviews_count: 1024
         }
       }
+    },
+    methods: {
+      ...mapActions({
+        defectCategories: "summary/defectCategories"
+      }),
+
     },
     computed: {
       ...mapGetters([

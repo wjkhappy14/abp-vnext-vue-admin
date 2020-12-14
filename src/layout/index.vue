@@ -4,15 +4,20 @@
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <tags-view v-if="needTagsView" />
+        <navbar />
       </div>
+      <TagsView></TagsView>
       <app-main />
+      <right-panel v-if="showSettings">
+        <settings />
+      </right-panel>
     </div>
   </div>
 </template>
 
 <script>
-  import { AppMain, Sidebar, TagsView } from './components'
+  import RightPanel from '@/components/RightPanel'
+  import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
   import ResizeMixin from './mixin/ResizeHandler'
   import { mapState } from 'vuex'
 
@@ -20,17 +25,20 @@
     name: 'Layout',
     components: {
       AppMain,
-      Sidebar,
-      TagsView
+      Navbar,
+      RightPanel,
+      Settings,
+      TagsView,
+      Sidebar
     },
     mixins: [ResizeMixin],
     computed: {
       ...mapState({
         sidebar: state => state.app.sidebar,
         device: state => state.app.device,
-        showSettings: state => state.settings.showSettings,
-        needTagsView: state => state.settings.tagsView,
-        fixedHeader: state => state.settings.fixedHeader
+        showSettings: state => state.app.settings.showSettings,
+        needTagsView: state => state.app.settings.tagsView,
+        fixedHeader: state => state.app.settings.fixedHeader
       }),
       classObj() {
         return {
@@ -43,7 +51,7 @@
     },
     methods: {
       handleClickOutside() {
-        this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+       // this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
       }
     }
   }
