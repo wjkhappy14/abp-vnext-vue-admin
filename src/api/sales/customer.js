@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function fetchList(query) {
   return request({
     url: '/api/sales/customer',
-    method: 'get',
+    method: 'GET',
     params: query
   })
 }
@@ -11,7 +11,7 @@ export function fetchList(query) {
 export function fetchItem(id) {
   return request({
     url: '/api/sales/customer/detail',
-    method: 'get',
+    method: 'GET',
     params: { id }
   })
 }
@@ -19,7 +19,7 @@ export function fetchItem(id) {
 export function fetchPv(pv) {
   return request({
     url: '/api/sales/customer/pv',
-    method: 'get',
+    method: 'GET',
     params: { pv }
   })
 }
@@ -27,7 +27,7 @@ export function fetchPv(pv) {
 export function createArticle(data) {
   return request({
     url: '/api/sales/customer/create',
-    method: 'post',
+    method: 'POST',
     data
   })
 }
@@ -35,7 +35,7 @@ export function createArticle(data) {
 export function updateArticle(data) {
   return request({
     url: '/api/sales/customer/update',
-    method: 'post',
+    method: 'POST',
     data
   })
 }

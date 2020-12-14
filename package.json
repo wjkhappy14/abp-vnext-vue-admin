@@ -1,13 +1,17 @@
 {
-  "author": "AngkorW",
+  "author": "Pan <panfree23@gmail.com>",
   "browserslist": [
     "> 1%",
     "last 2 versions"
   ],
+  "bugs": {
+    "url": "https://github.com/PanJiaChen/vue-element-admin/issues"
+  },
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
+    "@elsa-workflows/elsa-workflow-designer": "^2.0.0-preview-5",
+    "@handsontable/vue": "^4.1.1",
     "axios": "0.18.1",
-    "bulma": "^0.8.2",
     "cache-loader": "^4.1.0",
     "clipboard": "2.0.4",
     "codemirror": "5.45.0",
@@ -30,6 +34,7 @@
     "screenfull": "4.2.0",
     "showdown": "^1.9.1",
     "sortablejs": "1.8.4",
+    "stencil": "0.0.5",
     "tui-editor": "1.3.3",
     "vue": "2.6.10",
     "vue-count-to": "1.0.13",
@@ -39,7 +44,7 @@
     "vuex": "3.1.0",
     "xlsx": "0.14.1"
   },
-  "description": "abp-vnext-vue-admin",
+  "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
   "devDependencies": {
     "@babel/core": "7.0.0",
     "@babel/register": "7.0.0",
@@ -63,8 +68,8 @@
     "script-ext-html-webpack-plugin": "2.1.3",
     "script-loader": "^0.7.2",
     "serve-static": "^1.13.2",
-    "svgo": "1.2.0",
     "svg-sprite-loader": "4.1.3",
+    "svgo": "1.2.0",
     "vue-template-compiler": "2.6.10"
   },
   "engines": {
@@ -74,13 +79,17 @@
   "keywords": [
     "vue",
     "admin",
-    "abp",
+    "dashboard",
     "element-ui",
-    "abp-vnext",
-    "aspnet.core",
-    ".net core"
+    "boilerplate",
+    "admin-template",
+    "management-system"
   ],
-  "name": "abp-vnext-vue-admin",
+  "name": "vue-element-admin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PanJiaChen/vue-element-admin.git"
+  },
   "scripts": {
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
@@ -91,5 +100,5 @@
     "test:ci": "npm run lint && npm run test:unit",
     "test:unit": "jest --clearCache && vue-cli-service test:unit"
   },
-  "version": "1.1.1"
+  "version": "4.2.1"
 }

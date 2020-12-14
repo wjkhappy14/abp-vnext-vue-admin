@@ -47,32 +47,32 @@
 </template>
 
 <script>
-export default {
-  name: 'ErrorLog',
-  data() {
-    return {
-      dialogTableVisible: false
-    }
-  },
-  computed: {
-    errorLogs() {
-      return this.$store.getters.errorLogs
-    }
-  },
-  methods: {
-    clearAll() {
-      this.dialogTableVisible = false
-     // this.$store.dispatch('errorLog/clearErrorLog')
+  export default {
+    name: 'ErrorLog',
+    data() {
+      return {
+        dialogTableVisible: false
+      }
+    },
+    computed: {
+      errorLogs() {
+        return this.$store.getters.errorLogs
+      }
+    },
+    methods: {
+      clearAll() {
+        this.dialogTableVisible = false
+        // this.$store.dispatch('errorLog/clearErrorLog')
+      }
     }
   }
-}
 </script>
 
 <style scoped>
-.message-title {
-  font-size: 16px;
-  color: #333;
-  font-weight: bold;
-  padding-right: 8px;
-}
+  .message-title {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    padding-right: 8px;
+  }
 </style>

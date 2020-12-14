@@ -18,6 +18,7 @@
 <script>
   import clipboard from '@/utils/clipboard'
   import svgIcons from './svg-icons'
+  import '@elsa-workflows/elsa-workflow-designer';
   import elementIcons from './element-icons'
 
   export default {

@@ -21,35 +21,35 @@
 </template>
 
 <script>
-import { transactionList } from '@/api/remote-search'
-
-export default {
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        success: 'success',
-        pending: 'danger'
+  import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
+  export default {
+    filters: {
+      statusFilter(status) {
+        const statusMap = {
+          success: 'success',
+          pending: 'danger'
+        }
+        return statusMap[status]
+      },
+      orderNoFilter(str) {
+        return str
       }
-      return statusMap[status]
     },
-    orderNoFilter(str) {
-      return str
-    }
-  },
-  data() {
-    return {
-      list: null
-    }
-  },
-  created() {
-    this.fetchData()
-  },
-  methods: {
-    fetchData() {
-      transactionList().then(response => {
-        this.list = response.items
-      })
+    data() {
+      return {
+        list: null
+      }
+    },
+    created() {
+      this.fetchData()
+    },
+    methods: {
+      ...mapActions({
+        defectCategories: "summary/defectCategories"
+      }),
+      fetchData() {
+
+      }
     }
   }
-}
 </script>

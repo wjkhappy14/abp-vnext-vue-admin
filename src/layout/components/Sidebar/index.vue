@@ -10,8 +10,10 @@
                :active-text-color="variables.menuActiveText"
                :collapse-transition="false"
                mode="vertical">
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path">
-
+        <sidebar-item v-for="route in routes"
+                      :key="route.path"
+                      :item="route"
+                      :base-path="route.path">
         </sidebar-item>
       </el-menu>
     </el-scrollbar>
@@ -46,7 +48,7 @@
         return path
       },
       showLogo() {
-        return this.$store.state.settings.sidebarLogo
+        return this.$store.state.app.settings.sidebarLogo
       },
       variables() {
         return variables

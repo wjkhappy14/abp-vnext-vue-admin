@@ -6,7 +6,7 @@
   import echarts from 'echarts'
   require('echarts/theme/macarons') // echarts theme
   import resize from './mixins/resize'
-
+  import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
   const animationDuration = 3000
 
   export default {
@@ -43,6 +43,9 @@
       this.chart = null
     },
     methods: {
+      ...mapActions({
+        defectCategories: "summary/defectCategories"
+      }),
       initChart() {
         this.chart = echarts.init(this.$el, 'macarons')
 

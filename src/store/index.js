@@ -5,16 +5,21 @@ Vue.use(Vuex)
 
 import account from './modules/account'
 import identity from './modules/identity'
+import identityServer from './modules/identityServer'
 import app from './modules/app'
+import permission from './modules/permission'
 import errorLog from './modules/errorLog'
 import order from './modules/order'
 import policy from './modules/policy'
-import settings from './modules/settings'
 import tagsView from './modules/tagsView'
 import menu from './modules/menu'
 import blogging from './modules/blogging'
+import backgroundJob from './modules/backgroundJob'
+import auditLogging from './modules/auditLogging'
 import region from './modules/region'
-import permission from './modules/permission/index'
+import summary from './modules/summary'
+import sale from './modules/sale'
+import im from './modules/im'
 
 const store = new Vuex.Store({
   modules: {
@@ -22,14 +27,19 @@ const store = new Vuex.Store({
     app,
     errorLog,
     order,
-    settings,
     tagsView,
+    backgroundJob,
+    auditLogging,
     identity,
     policy,
+    permission,
     menu,
+    identityServer,
     blogging,
     region,
-    permission
+    summary,
+    sale,
+    im
   }
 })
 

@@ -8,10 +8,7 @@
              label-position="left">
 
       <div class="title-container">
-        <h4 style="text-align:center">Hello ABP VNext</h4>
-        <div class="title">
-          <h3>>登录<</h3>
-        </div>
+        <h3 class="title">>登录<</h3>
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -38,7 +35,7 @@
                     placeholder="密码"
                     name="password"
                     tabindex="2"
-                    autocomplete="on"
+                    autocomplete="off"
                     @keyup.native="checkCapslock"
                     @blur="capsTooltip = false"
                     @keyup.enter.native="handleLogin" />
@@ -47,18 +44,13 @@
           </span>
         </el-form-item>
       </el-tooltip>
-
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">确定</el-button>
-
       <div style="position:relative">
         <div class="tips">
           <span>...</span>
         </div>
-
       </div>
     </el-form>
-
-
   </div>
 </template>
 
@@ -72,27 +64,25 @@
     data() {
       const validateUsername = (rule, value, callback) => {
         if (!validUsername(value)) {
-          callback(new Error('请输入有效的Email'))
+          callback(new Error('Please enter the correct user name'))
         } else {
           callback()
         }
       }
       const validatePassword = (rule, value, callback) => {
         if (value.length < 6) {
-          callback(new Error('登录密码不能少于6个字符'))
+          callback(new Error('The password can not be less than 6 digits'))
         } else {
           callback()
         }
       }
       return {
         loginForm: {
-          username: "Admin@10000.com",
-          password: "Admin@10000.com",
-          tenanId: "",
-          loading: false,
+          username: "8888@Abp.VNext.Hello.com",
+          password: "8888@Abp.VNext.Hello.com",
           grant_type: "password",
-          scope: "Magic",
-          client_id: "Magic_Web",
+          scope: "profile role",
+          client_id: "Awesome_Web",
           client_secret: "1q2w3e*"
         },
         loginRules: {
@@ -120,7 +110,7 @@
       }
     },
     created() {
-      // window.addEventListener('storage', this.afterQRScan)
+       
     },
     mounted() {
       if (this.loginForm.username === '') {
@@ -162,7 +152,7 @@
             this.$store.dispatch('account/login', this.loginForm)
               .then(() => {
                 this.$router.push({
-                  path: this.redirect || '/blog/index',
+                  path: this.redirect || '/',
                   query: this.otherQuery
                 })
                 this.loading = false
@@ -183,12 +173,29 @@
           return acc
         }, {})
       }
+      // afterQRScan() {
+      //   if (e.key === 'x-admin-oauth-code') {
+      //     const code = getQueryObject(e.newValue)
+      //     const codeMap = {
+      //       wechat: 'code',
+      //       tencent: 'code'
+      //     }
+      //     const type = codeMap[this.auth_type]
+      //     const codeName = code[type]
+      //     if (codeName) {
+      //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
+      //         this.$router.push({ path: this.redirect || '/' })
+      //       })
+      //     } else {
+      //       alert('第三方登录失败')
+      //     }
+      //   }
+      // }
     }
   }
 </script>
 
 <style lang="scss">
-
   $bg:#283443;
   $light_gray:#454545;
   $cursor: #fff;
@@ -239,7 +246,6 @@
 </style>
 
 <style lang="scss" scoped>
-
   $bg:#2d3a4b;
   $dark_gray:#889aa4;
   $light_gray:#eee;

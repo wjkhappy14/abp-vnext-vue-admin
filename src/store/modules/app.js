@@ -1,9 +1,24 @@
 import Cookies from 'js-cookie'
 
 const state = {
+  policy: {
+    routes: []
+  },
+  settings: {
+    title: 'ABP(VNext)',
+    showSettings: true,
+    tagsView: {
+      cachedViews: [],
+      visitedViews: []
+    },
+    theme: "#11a983",
+    fixedHeader: true,
+    sidebarLogo: '',
+    errorLog: 'production'
+  },
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
-    withoutAnimation: false
+    withoutAnimation: true
   },
   device: 'desktop',
   size: Cookies.get('size') || 'medium'
@@ -38,6 +53,9 @@ const mutations = {
 }
 
 const actions = {
+  onVisibilitychange({ }) {
+    return Promise.all([console.log(this)]);
+  },
   toggleSideBar({ commit }) {
     commit('TOGGLE_SIDEBAR')
   },
@@ -49,6 +67,10 @@ const actions = {
   },
   setSize({ commit }, size) {
     commit('SET_SIZE', size)
+  },
+  changeSetting({ }) {
+
+
   }
 }
 

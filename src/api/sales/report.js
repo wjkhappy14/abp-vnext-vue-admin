@@ -1,41 +1,31 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function getQueryItems() {
   return request({
-      url: '/api/app/channel',
-    method: 'get',
-    params: query
+    url: '/api/app/queryItem/showText',
+    method: 'GET'
   })
 }
 
-export function fetchArticle(id) {
+export function getDefects() {
   return request({
-    url: '/article/detail',
-    method: 'get',
-    params: { id }
+    url: '/api/app/defect',
+    method: 'GET',
+    params: { MaxResultCount: 999 }
   })
 }
 
-export function fetchPv(pv) {
-  return request({
-    url: '/article/pv',
-    method: 'get',
-    params: { pv }
-  })
+export function setSheetFilters(filters) {
+  filters = filters || {};
+  return request.post('/api/app/summary/setSheetFilters', filters, {
+    headers: { 'Content-Type': 'application/json' }
+  });
 }
 
-export function createArticle(data) {
+export function fetchItems(filters) {
   return request({
-    url: '/article/create',
-    method: 'post',
-    data
-  })
-}
-
-export function updateArticle(data) {
-  return request({
-    url: '/article/update',
-    method: 'post',
-    data
+    url: '/api/app/report/report',
+    method: 'GET',
+    params: filters
   })
 }

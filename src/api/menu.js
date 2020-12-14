@@ -4,14 +4,14 @@ import request from '@/utils/request'
 export function routerMenu() {
   return request({
     url: '/api/generic/routerMenu/menuByRoles',
-    method: 'get'
+    method: 'GET'
   })
 }
 
 export function deleteItem(pv) {
   return request({
     url: '/api/generic/routerMenu/delete',
-    method: 'get',
+    method: 'DELETE',
     params: { pv }
   })
 }
@@ -19,7 +19,7 @@ export function deleteItem(pv) {
 export function create(data) {
   return request({
     url: '/api/generic/routerMenu/create',
-    method: 'post',
+    method: 'POST',
     data
   })
 }
@@ -27,7 +27,7 @@ export function create(data) {
 export function update(data) {
   return request({
     url: '/api/generic/routerMenu/update',
-    method: 'post',
+    method: 'POST',
     data
   })
 }

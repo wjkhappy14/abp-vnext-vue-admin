@@ -1,9 +1,8 @@
-import { login, logout, getMyProfile } from '@/api/account'
+import { login, endSession, getMyProfile } from '@/api/account'
 import router, { resetRouter } from '@/router'
-import { setToken, getToken } from '@/utils/auth'
 
 const state = {
-  token: getToken(),
+  token: '',
   id: '',
   name: '',
   avatar: '',
@@ -20,15 +19,30 @@ const getters = {
 const mutations = {
   setToken: (state, token) => {
     state.token = token
+  },
+  SET_INTRODUCTION: (state, introduction) => {
+    state.introduction = introduction
+  },
+  setName: (state, name) => {
+    state.name = name
+  },
+  SET_AVATAR: (state, avatar) => {
+    state.avatar = avatar
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
 const actions = {
   login({ commit }, userInfo) {
+    const { username, password } = userInfo
+
     return new Promise((resolve, reject) => {
       login(userInfo).then(response => {
         commit('setToken', response.access_token)
-        setToken(response.access_token);
+        commit('setName', userInfo.username)
+        //setToken(response.access_token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -40,6 +54,32 @@ const actions = {
     return new Promise((resolve, reject) => {
       getMyProfile().then(response => {
         const { data } = response
+        const users = {
+          'admin-token': {
+            roles: ['admin'],
+            introduction: 'I am a super administrator',
+            avatar: 'https://w.wallhaven.cc/full/1j/wallhaven-1j1oqg.jpg',
+            name: 'Super Admin'
+          },
+          'editor-token': {
+            roles: ['editor'],
+            introduction: 'I am an editor',
+            avatar: 'https://w.wallhaven.cc/full/1j/wallhaven-1j1oqg.jpg',
+            name: 'Normal Editor'
+          }
+        }
+
+        const { roles, name, avatar, introduction } = users['admin-token'];
+
+        // roles must be a non-empty array
+        if (!roles || roles.length <= 0) {
+          reject('getInfo: roles must be a non-null array!')
+        }
+
+        commit('SET_ROLES', roles)
+        commit('SET_AVATAR', avatar)
+        commit('SET_INTRODUCTION', introduction)
+        resolve(users['admin-token'])
       }).catch(error => {
         reject(error)
       })
@@ -50,6 +90,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         // commit('setToken', '')
+        commit('SET_ROLES', [])
         removeToken()
         resetRouter()
 
@@ -64,10 +105,35 @@ const actions = {
     })
   },
 
-  resetToken({ commit }) {
+  endSession({ commit }) {
     return new Promise(resolve => {
-      // commit('setToken', '')
-      // removeToken()
+      endSession().then(() => {
+        commit('removeToken', '')
+      });
+      resolve()
+    })
+  },
+
+  // dynamically modify permissions
+  changeRoles({ commit, dispatch }, role) {
+    return new Promise(async resolve => {
+      const token = role + '-token'
+      commit('setToken', token)
+      setToken(token)
+
+      const { roles } = await dispatch('getMyProfile')
+
+      resetRouter()
+
+      // generate accessible routes map based on roles
+      const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+
+      // dynamically add accessible routes
+      router.addRoutes(accessRoutes)
+
+      // reset visited views and cached views
+      dispatch('tagsView/delAllViews', null, { root: true })
+
       resolve()
     })
   }

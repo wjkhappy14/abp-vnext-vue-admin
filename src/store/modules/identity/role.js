@@ -1,4 +1,4 @@
-import { addRole, getRoles, getRole, updateRole, deleteRole } from '@/api/identity/role'
+import { addRole, getRoles, getRole, updateRole, deleteRole } from '@/api/Identity/role'
 
 const state = {
   items: []
@@ -15,9 +15,9 @@ const mutations = {
 }
 
 const actions = {
-  addRole({ commit }, role) {
+  addRole({ commit }, permission) {
     return new Promise((resolve, reject) => {
-      addRole(role).then(response => {
+      addRole(permission).then(response => {
         commit('setItems', response.items)
         resolve()
       }).catch(error => {

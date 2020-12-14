@@ -6,7 +6,7 @@
   import echarts from 'echarts'
   require('echarts/theme/macarons') // echarts theme
   import resize from './mixins/resize'
-
+  import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
   export default {
     mixins: [resize],
     props: {
@@ -16,7 +16,7 @@
       },
       width: {
         type: String,
-        default: '100%'
+        default: '80%'
       },
       height: {
         type: String,
@@ -57,78 +57,90 @@
       this.chart = null
     },
     methods: {
+      ...mapActions({
+        monthClothLength: "summary/monthClothLength"
+      }),
       initChart() {
         this.chart = echarts.init(this.$el, 'macarons')
-        this.setOptions(this.chartData)
+        this.monthClothLength().then((items) => {
+          this.setOptions(items)
+        });
       },
-      setOptions({ expectedData, actualData } = {}) {
-        this.chart.setOption({
-          xAxis: {
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            boundaryGap: false,
-            axisTick: {
-              show: false
-            }
-          },
-          grid: {
-            left: 10,
-            right: 10,
-            bottom: 20,
-            top: 30,
-            containLabel: true
-          },
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross'
-            },
-            padding: [5, 10]
-          },
-          yAxis: {
-            axisTick: {
-              show: false
-            }
-          },
-          legend: {
-            data: ['expected', 'actual']
-          },
-          series: [{
-            name: 'expected', itemStyle: {
-              normal: {
-                color: '#FF005A',
-                lineStyle: {
-                  color: '#FF005A',
-                  width: 2
-                }
-              }
-            },
-            smooth: true,
-            type: 'line',
-            data: expectedData,
-            animationDuration: 2800,
-            animationEasing: 'cubicInOut'
-          },
+      setOptions(items) {
+        const legends = Object.keys(items);
+        const xAxis = items[legends[0]].map(item => {
+          return item.key;
+        });
+        this.chart.setOption(
           {
-            name: 'actual',
-            smooth: true,
-            type: 'line',
-            itemStyle: {
-              normal: {
-                color: '#3888fa',
-                lineStyle: {
-                  color: '#3888fa',
-                  width: 2
-                },
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
+            xAxis: {
+              data: xAxis,
+              boundaryGap: false,
+              axisTick: {
+                show: false
               }
             },
-            data: actualData,
-            animationDuration: 2800,
-            animationEasing: 'quadraticOut'
-          }]
-        })
+            grid: {
+              left: 10,
+              right: 10,
+              bottom: 20,
+              top: 30,
+              containLabel: true
+            },
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'cross'
+              },
+              padding: [5, 10]
+            },
+            yAxis: {
+              axisTick: {
+                show: false
+              }
+            },
+            legend: {
+              data: legends
+            },
+            series: [
+              {
+                name: legends[0],
+                itemStyle: {
+                  normal: {
+                    color: '#FF005A',
+                    lineStyle: {
+                      color: '#FF005A',
+                      width: 2
+                    }
+                  }
+                },
+                smooth: true,
+                type: 'line',
+                data: [0, 1, 2, 3, 4, 5, 16, 7, 8, 9, 1, 11],
+                animationDuration: 2800,
+                animationEasing: 'cubicInOut'
+              },
+              {
+                name: legends[1],
+                smooth: true,
+                type: 'line',
+                itemStyle: {
+                  normal: {
+                    color: '#3888fa',
+                    lineStyle: {
+                      color: '#3888fa',
+                      width: 2
+                    },
+                    areaStyle: {
+                      color: '#f3f8ff'
+                    }
+                  }
+                },
+                data: [10, 1, 12, 3, 4, 5, 6, 7, 18, 9, 10, 11],
+                animationDuration: 2800,
+                animationEasing: 'quadraticOut'
+              }]
+          })
       }
     }
   }

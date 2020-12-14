@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-
     <el-table :data="users"
               border
               ref="Options"
@@ -86,8 +85,8 @@
     },
     methods: {
       ...mapActions({
-        addUser: "identity/user/addUser",
-        getUsers: "identity/user/getUsers"
+        getUsers: "identity/user/getUsers",
+        addUser: "identity/user/addUser"
       }),
       deleteItem: function (item) {
 

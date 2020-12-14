@@ -1,24 +1,29 @@
 <template>
   <div id="app">
     <router-view />
-    <InitializeVue></InitializeVue>
   </div>
 </template>
 
 <script>
+  import stencil from 'stencil'
+
   import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
-  import InitializeVue from './Initialize.vue';
   export default {
     name: 'App',
-    components: {
-      InitializeVue
-    },
     created() {
+      console.log(stencil);
+      document.addEventListener('visibilitychange', this.onVisibilitychangeHandler)
     },
     methods: {
       ...mapActions({
 
-      })
+      }),
+      onVisibilitychangeHandler() {
+        this.$store.dispatch('app/onVisibilitychange', {}).then(() => {
+
+
+        });
+      }
     }
   }
 </script>
