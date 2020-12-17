@@ -14,64 +14,20 @@
           </el-button>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="疵点设置" name="v-directive">
-        <ul>
-          <li v-for="(value,key,index) in categories">
-            <div>
-              <span>
-                {{index}}-{{key}}
-              </span>
-              <ul>
-                <li v-for="(item) in value">
-                  <span>{{item.id}}</span>
-                  <span>{{item.name}}</span>
-                  <span>{{item.customerCode}}</span>
-                  <span>{{item.isVisiable}}</span>
-                  <span>{{item.zIndex}}</span>
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
+      <el-tab-pane label="Transition">
+        <button @click="shuffle">
+          Shuffle
+        </button>
+        <a href="https://codesandbox.io/s/github/vuejs/vuejs.org/tree/master/src/v2/examples/vue-20-list-move-transitions?file=/style.css:0-403">list-move-transitions</a>
+        <transition-group name="cell" tag="div" class="container">
+          <div v-for="cell in cells" :key="cell.id" class="cell">
+            {{ cell.number }}
+          </div>
+        </transition-group>
         <el-input v-model="inputData" placeholder="Please input" style="width:400px;max-width:100%;" />
         <el-button v-clipboard:copy="inputData" v-clipboard:success="clipboardSuccess" type="primary" icon="el-icon-document">
           复制
         </el-button>
-      </el-tab-pane>
-      <el-tab-pane label="查询设置" name="grid">
-        <el-table :data="grid.columns"
-                  row-key="id"
-                  border
-                  fit
-                  highlight-current-row
-                  style="width: 100%;">
-          <el-table-column type="index"
-                           width="50">
-          </el-table-column>
-          <el-table-column type="selection"
-                           width="50">
-          </el-table-column>
-          <el-table-column label="name"  width="200px" align="left">
-            <template slot-scope="{row}">
-              <span>{{ row.name}}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="source" width="200px" align="left">
-            <template slot-scope="{row}">
-              <span class="link-type" @click="handleUpdate(row)">{{ row.source }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="text" width="150px" align="left">
-            <template slot-scope="{row}">
-              <span>{{ row.text }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="type" width="80px" align="left">
-            <template slot-scope="{row}">
-              <span style="color:red;">{{ row.type }}</span>
-            </template>
-          </el-table-column>
-        </el-table>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -79,6 +35,7 @@
 
 <script>
   import clip from '@/utils/clipboard' // use clipboard directly
+  import { shuffle } from "lodash";
   import clipboard from '@/directive/clipboard/index.js' // use clipboard by v-directive
   import { mapActions, mapState, mapMutations, mapGetters } from "vuex";
   export default {
@@ -88,6 +45,12 @@
     },
     data() {
       return {
+        cells: Array.apply(null, { length: 81 }).map(function (_, index) {
+          return {
+            id: index,
+            number: (index % 9) + 1
+          };
+        }),
         activeName: 'directly',
         inputData: 'Hellow Kitty',
         item: {
@@ -104,9 +67,9 @@
       })
     },
     created() {
-      this.getItems();
-      this.getCategories();
-      this.gridColumns();
+      // this.getItems();
+      // this.getCategories();
+      // this.gridColumns();
     },
     methods: {
       ...mapActions({
@@ -118,6 +81,9 @@
       handleCopy(text, event) {
         clip(text, event)
       },
+      shuffle: function () {
+        this.cells = shuffle(this.cells);
+      },
       clipboardSuccess() {
         this.$message({
           message: '复制成功',
@@ -128,4 +94,36 @@
     }
   }
 </script>
+
+<style type="text/css">
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 238px;
+    margin-top: 10px;
+  }
+
+  .cell {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #aaa;
+    margin-right: -1px;
+    margin-bottom: -1px;
+  }
+
+    .cell:nth-child(3n) {
+      margin-right: 0;
+    }
+
+    .cell:nth-child(27n) {
+      margin-bottom: 0;
+    }
+
+  .cell-move {
+    transition: transform 1s;
+  }
+</style>
 

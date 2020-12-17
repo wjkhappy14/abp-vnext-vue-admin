@@ -2,7 +2,7 @@ import request from '@/utils/request'
 import qs from "qs";
 export function login(data) {
   var formData = qs.stringify(data);
-  return request.post('http://106.13.130.51:6060/connect/token', formData)
+  return request.post('http://117.50.40.186:6060/connect/token', formData)
 }
 export function getMyProfile() {
   return request({

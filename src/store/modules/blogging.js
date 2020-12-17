@@ -1,4 +1,4 @@
-import article from './Blogging/article'
+import article from './blogging/article'
 
 
 export default {

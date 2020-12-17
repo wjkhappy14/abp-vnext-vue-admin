@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/api/app/auditLogging?maxResultCount=50',
+    url: '/api/app/audit-logging?maxResultCount=50',
     method: 'GET',
     params: query
   })
@@ -10,25 +10,15 @@ export function fetchList(query) {
 
 export function fetchArticle(id) {
   return request({
-    url: '/article/detail',
+    url: '/api/app/audit-logging/detail',
     method: 'GET',
     params: { id }
   })
 }
 
-export function fetchPv(pv) {
-  return request({
-    url: '/article/pv',
-    method: 'GET',
-    params: { pv }
-  })
-}
-
-
-
 export function updateArticle(data) {
   return request({
-    url: '/article/update',
+    url: '/api/app/audit-logging/update',
     method: 'POST',
     data
   })

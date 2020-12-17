@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/api/app/auditLog',
+    url: '/api/app/background-job',
     method: 'GET',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function fetchArticle(id) {
   return request({
-    url: '/article/detail',
+    url: '/api/app/background-job/article',
     method: 'GET',
     params: { id }
   })
@@ -18,7 +18,7 @@ export function fetchArticle(id) {
 
 export function fetchPv(pv) {
   return request({
-    url: '/article/pv',
+    url: '/api/app/background-job/pv',
     method: 'GET',
     params: { pv }
   })
@@ -28,7 +28,7 @@ export function fetchPv(pv) {
 
 export function updateArticle(data) {
   return request({
-    url: '/article/update',
+    url: '/api/app/background-job/update',
     method: 'POST',
     data
   })

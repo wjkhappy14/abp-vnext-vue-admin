@@ -27,7 +27,7 @@ export function deleteCountry(id) {
 
 export function getStateProvinces(query) {
   return request({
-    url: '/api/app/stateProvince/pagedList?maxResultCount=50&sorting=Name',
+    url: '/api/app/state-province/paged-list?maxResultCount=50&sorting=Name',
     method: 'get',
     params: query
   })
@@ -48,7 +48,7 @@ export function updateStateProvince(stateProvince) {
   item.name = stateProvince.name;
   item.stateProvinceCode = stateProvince.stateProvinceCode;
   item.territory = stateProvince.territory;
-  return request.put(`/api/app/stateProvince/${stateProvince.id}`, item)
+  return request.put(`/api/app/state-province/${stateProvince.id}`, item)
 }
 export function deleteStateProvince(data) {
   return request({
@@ -60,7 +60,7 @@ export function deleteStateProvince(data) {
 
 export function getCities(query) {
   return request({
-    url: '/api/app/city/pagedList?maxResultCount=150&sorting=Name',
+    url: '/api/app/city/paged-list?maxResultCount=150&sorting=Name',
     method: 'get',
     params: query
   })
