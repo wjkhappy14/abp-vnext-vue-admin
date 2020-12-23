@@ -9,7 +9,6 @@ import workflowRouter from './modules/workflow'
 import diagnosticRouter from './modules/diagnostic'
 import productionRouter from './modules/production'
 import bloggingRouter from './modules/blogging'
-import financialRouter from './modules/financial'
 import permissionRouter from './modules/permission'
 import backgroundJobRouter from './modules/backgroundJob'
 import auditLoggingRouter from './modules/auditLogging'
@@ -77,7 +76,6 @@ export const asyncRoutes = [
   identityServerRouter,
   productionRouter,
   bloggingRouter,
-  financialRouter,
   permissionRouter,
   {
     path: '/im',

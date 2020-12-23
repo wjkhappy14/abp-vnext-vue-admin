@@ -1,6 +1,8 @@
 <template>
   <div class="dashboard-container">
-    <adminDashboard></adminDashboard>
+    <adminDashboard>
+
+    </adminDashboard>
   </div>
 </template>
 
@@ -25,8 +27,12 @@
     }
     ,
     created() {
-   
       this.menus();
     }
   }
 </script>
+<style type="text/css">
+  .dashboard-container {
+    border: solid 2px red;
+  }
+</style>

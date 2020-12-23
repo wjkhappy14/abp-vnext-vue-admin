@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/api/app/contact/pagedList?sorting=name',
+    url: '/api/app/contact/paged-list?sorting=name',
     method: 'GET',
     params: query
   })

@@ -386,4 +386,4 @@ class myWs2 extends EventEmitter {
   }
 }
 
-export let SocketAPI = new myWs2("http://106.75.247.121/notification", {})
+export let SocketAPI = new myWs2("http://106.13.130.51:7070/signalr-hubs/xnotification", {})

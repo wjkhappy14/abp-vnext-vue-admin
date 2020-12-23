@@ -30,18 +30,25 @@
       }
     },
     mounted: function () {
-       this.$nextTick(function () { })
+      this.$nextTick(function () { })
     },
     updated: function () {
     },
     created: function () {
       //箭头函数并没有 this，this 会作为变量一直向上级词法作用域查找，直至找到为止
       const s = Symbol();
+      const slots = this.$slots;
     },
     destroyed() {
 
     },
     methods: {
+      scrollHandler() {
+        const { top, bottom, left } = this.$refs.meta.getBoundingClientRect()
+        this.fixedControl = bottom > document.documentElement.clientHeight &&
+          top + 44 <= document.documentElement.clientHeight
+        this.$refs.control.style.left = this.fixedControl ? `${left}px` : '0'
+      },
       beforeEnter(el) {
         el.style.opacity = 1;
       },
