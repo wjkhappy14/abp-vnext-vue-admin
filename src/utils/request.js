@@ -3,7 +3,7 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 
 const service = axios.create({
-  baseURL: "http://106.13.130.51:7070",//process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: "http://82.157.167.144:30571",// apisix process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 10 * 1000 // request timeout
 })
