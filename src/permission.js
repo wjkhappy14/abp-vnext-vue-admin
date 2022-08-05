@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
       NProgress.done()
     } else {
 
-      const hasRoles = true; //store.state.account.roles && store.state.account.roles.length > 0
+      const hasRoles = store.state.account.roles && store.state.account.roles.length > 0
       if (hasRoles) {
         next()
       } else {
