@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export function fetchList(name) {
+export function fetchList(query) {
   return request({
-    url: '/api/app/eztv/pages?page=1&limit=100',
+    url: '/api/abp/eztv/pages',
     method: 'get',
-    params: { name }
+    params: query
   })
 }
 

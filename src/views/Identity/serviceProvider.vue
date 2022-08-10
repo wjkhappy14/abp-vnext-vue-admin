@@ -12,14 +12,14 @@
       </a>
     </div>
     <el-table v-loading="listLoading" :data="list" element-loading-text="正在加载..." border fit highlight-current-row>
-      <el-table-column align="center" label="Id" width="45">
+      <el-table-column align="center" label="Id" width="60">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.$index+1 }}
         </template>
       </el-table-column>
       <el-table-column label="descriptions" align="left">
         <template slot-scope="scope">
-          <el-tag>{{ scope.row.descriptions[0] }}</el-tag>
+          <el-tag>{{ scope.row[0] }}</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -42,7 +42,7 @@
     },
     data() {
       return {
-        list: null,
+        list: [],
         listLoading: true,
         downloadLoading: false,
         filename: '',
