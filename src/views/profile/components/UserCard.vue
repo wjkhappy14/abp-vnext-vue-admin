@@ -61,7 +61,7 @@
       var user = {
         name: 'Angkor.w',
         email: '',
-        avatar: '',
+        avatar: 'http://110.40.246.134:8039/xiuren/123.jpg',
         role: 'adminxxxx'
       }
       return user;

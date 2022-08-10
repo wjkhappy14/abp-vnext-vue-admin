@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
-    <el-table :data="users"
+    <el-table :data="items"
               border
               ref="Options"
               height="850"
               row-key="id"
-              element-loading-text="Loading..."
+              element-loading-text="正在加载..."
               @current-change="currentChangeHandler"
               tooltip-effect="light"
               highlight-current-row>
@@ -54,21 +54,21 @@
           <span>{{scope.row.languages||'--'}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="phoneNumber" align="left" label="Phone Number" width="180">
+      <el-table-column prop="phone" align="left" label="Phone" width="120">
         <template slot-scope="scope">
-          <span>{{scope.row.phoneNumber||'--'}}</span>
+          <span>{{scope.row.phone||'--'}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="faxNumber" align="left" label="Fax Number" width="180">
+      <el-table-column prop="age" align="left" label="age" width="80">
         <template slot-scope="scope">
-          <span>{{scope.row.faxNumber||'--'}}</span>
+          <span>{{scope.row.age||'--'}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column prop="emailAddress" align="left" label="Email" width="240">
+      <el-table-column prop="motto" align="left" label="motto" width="240">
         <template slot-scope="scope">
-          <span>{{scope.row.email||'--'}}</span>
+          <span>{{scope.row.motto||'--'}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="isBlocked" align="center" label="Blocked" width="80">
@@ -91,12 +91,16 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="creationTime" align="center" label="Birthday" width="120">
+      <el-table-column prop="birthday" align="center" label="Birthday" width="120">
         <template slot-scope="scope">
           <time>{{ scope.row.birthday | parseTime('{y}-{m}-{d}') }}</time>
         </template>
       </el-table-column>
-
+  <el-table-column prop="avatar" align="center" label="avatar" width="120">
+        <template slot-scope="scope">
+           <img class="img-circle" :src='scope.row.avatar' style="width:60px;height:60px"/>
+        </template>
+      </el-table-column>
       <el-table-column label="Actions" align="center" width="200">
         <template slot="header" slot-scope="scope">
           <el-input v-model="search"
@@ -125,7 +129,7 @@
     directives: { permission },
     data() {
       return {
-        users: [],
+        items: [],
         search: '',
         key: 1 // 为了能每次切换权限的时候重新初始化指令
       }
@@ -148,7 +152,7 @@
       queryUsers(page = 1) {
         fetchList()
           .then(res => {
-            this.users = res;
+            this.items = res.items;
           });
       },
       checkPermission,
