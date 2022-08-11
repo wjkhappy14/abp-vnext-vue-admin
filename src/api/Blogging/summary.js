@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-      url: '/api/app/channel',
+      url: '/api/blogging/summary',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function fetchArticle(id) {
   return request({
-    url: '/article/detail',
+    url: '/api/blogging/detail',
     method: 'get',
     params: { id }
   })
@@ -18,7 +18,7 @@ export function fetchArticle(id) {
 
 export function fetchPv(pv) {
   return request({
-    url: '/article/pv',
+    url: '/api/blogging/pv',
     method: 'get',
     params: { pv }
   })

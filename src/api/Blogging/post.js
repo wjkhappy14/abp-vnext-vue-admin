@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-      url: '/api/app/merchant',
+      url: '/api/blogging/posts/5602718F-1FC5-1DE8-0C70-39F152398A16/all',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function fetchArticle(id) {
   return request({
-    url: '/article/detail',
+    url: '/api/blogging/posts/detail',
     method: 'get',
     params: { id }
   })
@@ -18,7 +18,7 @@ export function fetchArticle(id) {
 
 export function fetchPv(pv) {
   return request({
-    url: '/article/pv',
+    url: '/api/blogging/posts/pv',
     method: 'get',
     params: { pv }
   })

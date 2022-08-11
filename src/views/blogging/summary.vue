@@ -10,7 +10,7 @@
 
 <script>
   import { HotTable } from '@handsontable/vue';
-
+import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/Blogging/summary'
 
   export default {
     name: 'ComplexTable',

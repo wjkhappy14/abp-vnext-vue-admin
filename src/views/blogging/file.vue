@@ -118,7 +118,7 @@
 </template>
 
 <script>
-  import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/Blogging/image'
+  import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/Blogging/file'
   import waves from '@/directive/waves' // waves directive
   import { parseTime } from '@/utils'
   import Pagination from '@/components/Pagination'

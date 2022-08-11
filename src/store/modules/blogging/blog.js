@@ -1,5 +1,5 @@
 import bus from '@/utils/bus'
-import { getItems, create, deleteItem } from '@/api/Blogging/article'
+import { fetchList, create, deleteItem } from '@/api/Blogging/blog'
 import { range } from "rxjs";
 import { map, filter } from "rxjs/operators";
 
@@ -23,9 +23,9 @@ const mutations = {
 }
 
 const actions = {
-  addItem({ commit }, article) {
+  addItem({ commit }, blog) {
     return new Promise((resolve, reject) => {
-      create(article).then(response => {
+      create(blog).then(response => {
         commit('setItems', response)
         resolve()
       }).catch(error => {
@@ -33,9 +33,9 @@ const actions = {
       })
     })
   },
-  updateItem({ commit }, permission) {
+  updateItem({ commit }, blog) {
     return new Promise((resolve, reject) => {
-      updateUser(permission).then(response => {
+      updateUser(blog).then(response => {
         commit('setItems', response.access_token)
         resolve()
       }).catch(error => {
@@ -45,7 +45,7 @@ const actions = {
   },
 
   getItems({ commit, state }) {
-    return getItems().then(response => {
+    return fetchList().then(response => {
       commit('setItems', response.items);
       range(1, 20)
         .pipe(
@@ -57,8 +57,8 @@ const actions = {
     })
   },
 
-  deleteItem({ commit, state, dispatch }, article) {
-    return deleteItem(article).then(x => {
+  deleteItem({ commit, state, dispatch }, blog) {
+    return deleteItem(blog).then(x => {
       bus.$notify.success({
         title: '新闻动态',
         message: '删除成功',

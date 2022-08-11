@@ -28,34 +28,29 @@
       <el-table-column type="selection"
                        width="50">
       </el-table-column>
-      <el-table-column label="发布时间" sortable="custom" width="180px" align="center">
+      <el-table-column label="creation time" sortable="custom" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.publishDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.creationTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="标题" width="100px" align="left">
+      <el-table-column label="name"  align="left">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
-          <span>{{ row.title}}</span>
+          <span>{{ row.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="详细内容" width="250px" align="left">
+      <el-table-column label="description" width="250px" align="left">
         <template slot-scope="{row}">
-          <span>{{ row.content }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="摘要" width="250px" align="center">
-        <template slot-scope="{row}">
-          <span style="color:red;">{{ row.digest }}</span>
+          <span style="color:red;">{{ row.description }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="备注" width="250px" align="center">
+      <el-table-column label="id" width="200px" align="center">
         <template slot-scope="{row}">
-          <span style="color:red;">{{ row.comment }}</span>
+          <span style="color:red;">{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="配图" width="250px" align="center">
+      <el-table-column label="配图" width="200px" align="center">
         <template slot-scope="{row}">
           <img :src="row.imageUrl" width="100" height="100" />
         </template>
@@ -101,7 +96,7 @@
   }, {})
 
   export default {
-    name: 'ComplexTable',
+    name: 'main-grid',
     components: { Pagination },
     directives: { waves },
     filters: {
@@ -162,9 +157,9 @@
     },
 
     computed: {
-      ...mapState(["docs/article/count"]),
+      ...mapState(["blogging/blog/count"]),
       ...mapGetters({
-        items: 'docs/article/items'
+        items: 'blogging/blog/items'
       })
     },
     created() {
@@ -172,8 +167,8 @@
     },
     methods: {
       ...mapActions({
-        getItems: "docs/article/getItems",
-        deleteItem: "docs/article/deleteItem"
+        getItems: "blogging/blog/getItems",
+        deleteItem: "blogging/blog/deleteItem"
       }),
       getList() {
         getItems(this.listQuery).then(response => {

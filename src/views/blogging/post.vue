@@ -142,7 +142,7 @@
 </template>
 
 <script>
-  import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/merchant'
+  import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/Blogging/post'
   import waves from '@/directive/waves' // waves directive
   import { parseTime } from '@/utils'
   import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -161,7 +161,7 @@
   }, {})
 
   export default {
-    name: 'ComplexTable',
+    name: 'post-grid',
     components: { Pagination },
     directives: { waves },
     filters: {
@@ -349,17 +349,6 @@
       },
       handleDownload() {
         this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-          const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-          const data = this.formatJson(filterVal, this.list)
-          excel.export_json_to_excel({
-            header: tHeader,
-            data,
-            filename: 'table-list'
-          })
-          this.downloadLoading = false
-        })
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {

@@ -35,7 +35,7 @@
 
 <script>
   import Tinymce from '@/components/Tinymce'
-  import { create } from '@/api/Blogging/article'
+  import { create } from '@/api/Blogging/blog'
   import bus from '@/utils/bus'
   export default {
     name: 'rich-editor',

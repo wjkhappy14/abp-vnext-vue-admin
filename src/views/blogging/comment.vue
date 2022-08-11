@@ -143,7 +143,7 @@
 </template>
 
 <script>
-  import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/Blogging/pdf'
+  import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/Blogging/comment'
   import waves from '@/directive/waves' // waves directive
   import { parseTime } from '@/utils'
   import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -162,7 +162,7 @@
   }, {})
 
   export default {
-    name: 'ComplexTable',
+    name: 'comment-grid',
     components: { Pagination },
     directives: { waves },
     filters: {

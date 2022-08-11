@@ -10,28 +10,28 @@ const bloggingRouter = {
   },
   children: [
     {
-      path: 'excel',
-      component: () => import('@/views/Blogging/excel'),
-      name: 'excel',
-      meta: { title: 'Excel', icon: 'documentation', affix: false }
+      path: 'post',
+      component: () => import('@/views/Blogging/post'),
+      name: 'post',
+      meta: { title: 'post', icon: 'documentation', affix: false }
     },
     {
-      path: 'image',
-      component: () => import('@/views/Blogging/image'),
-      name: 'image',
-      meta: { title: '图片库', icon: 'zip', affix: false }
+      path: 'comment',
+      component: () => import('@/views/Blogging/comment'),
+      name: 'comment',
+      meta: { title: 'comment', icon: 'zip', affix: false }
     },
     {
-      path: 'pdf',
-      component: () => import('@/views/Blogging/pdf'),
-      name: 'pdf',
-      meta: { title: 'PDF', icon: 'pdf', affix: false }
+      path: 'blog',
+      component: () => import('@/views/Blogging/blog'),
+      name: 'blog',
+      meta: { title: 'blog', icon: 'pdf', affix: false }
     },
     {
       path: 'index',
       component: () => import('@/views/Blogging/index'),
       name: 'index',
-      meta: { title: '新闻动态', icon: 'pdf', affix: false }
+      meta: { title: '动态', icon: 'pdf', affix: false }
     },
     {
       path: 'create ',

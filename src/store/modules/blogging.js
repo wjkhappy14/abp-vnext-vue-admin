@@ -1,9 +1,12 @@
-import article from './blogging/article'
-
+import blog from './blogging/blog'
+import post from './blogging/post'
+import comment from './blogging/comment'
 
 export default {
   namespaced: true,
   modules: {
-    article
+    blog,
+    post,
+    comment
   }
 }

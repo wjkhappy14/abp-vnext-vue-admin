@@ -1,8 +1,11 @@
 import request from '@/utils/request'
+//http://82.157.167.144:30571/swagger-blog/swagger/index.html
+//http://www.tallper.top/swagger-blog/swagger/index.html
 
-export function getItems(query) {
+///api/blogging/blogs/admin
+export function fetchList(query) {
   return request({
-    url: '/api/contents/article',
+    url: '/api/blogging/blogs/admin',
     method: 'GET',
     params: query
   })
@@ -10,14 +13,14 @@ export function getItems(query) {
 
 export function getItem(item) {
   return request({
-    url: '/api/contents/article/' + item.id,
+    url: '/api/blogging/article/' + item.id,
     method: 'GET'
   })
 }
 
 export function deleteItem(item) {
   return request({
-    url: '/api/contents/article/' + item.id,
+    url: '/api/blogging/article/' + item.id,
     method: 'DELETE'
   })
 }
