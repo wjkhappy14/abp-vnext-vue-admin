@@ -1,33 +1,36 @@
-import { addRole, getRoles, getRole, updateRole, deleteRole } from '@/api/Identity/role'
+import { getItems, getItem, addItem, updateItem, deleteItem } from '@/api/Identity/role'
 
 const state = {
   items: []
 }
 const getters = {
-  roles: (state) => {
-    return state.items;
+  count: (state) => {
+    return state.items.count;
   }
 }
 const mutations = {
   setItems: (state, items) => {
     state.items = items
+  },
+  sort: (state) => {
+    state.items.sort()
   }
 }
 
 const actions = {
-  addRole({ commit }, permission) {
+  addRole({ commit }, role) {
     return new Promise((resolve, reject) => {
-      addRole(permission).then(response => {
-        commit('setItems', response.items)
+      addItem(role).then(r => {
+        commit('setItem', r)
         resolve()
       }).catch(error => {
         reject(error)
       })
     })
   },
-  updateRole({ commit }, permission) {
+  updateRole({ commit }, role) {
     return new Promise((resolve, reject) => {
-      updateRole(permission).then(response => {
+      updateItem(role).then(response => {
         commit('setItems', response.items)
         resolve()
       }).catch(error => {
@@ -36,10 +39,19 @@ const actions = {
     })
   },
 
-  getRoles({ commit, state }) {
+  getRoles({ commit}) {
     return new Promise((resolve, reject) => {
-      getRoles().then(response => {
+      getItems().then(response => {
         commit('setItems', response.items)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getItem({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getItem().then(item => {
+        commit('setItem', item)
       }).catch(error => {
         reject(error)
       })
@@ -50,17 +62,8 @@ const actions = {
     return new Promise(async resolve => {
       const token = role + '-token'
       commit('setToken', token)
-      setToken(token)
-
-
-      // generate accessible routes map based on roles
-      const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
-
-      // dynamically add accessible routes
-      router.addRoutes(accessRoutes)
-
-      // reset visited views and cached views
-      dispatch('tagsView/delAllViews', null, { root: true })
+      setToken(token);
+      deleteItem();
 
       resolve()
     })

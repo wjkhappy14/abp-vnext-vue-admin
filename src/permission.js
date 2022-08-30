@@ -20,8 +20,9 @@ router.beforeEach(async (to, from, next) => {
   // set page title
   document.title = getPageTitle(to.meta.title)
 
-  const hasToken = store.state.account.token != ""
-  if (hasToken) {
+  //const hasToken = store.state.account.token != ""
+  const token = window.localStorage.getItem("token");
+  if (token) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })

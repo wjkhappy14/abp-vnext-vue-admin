@@ -1,36 +1,51 @@
-import { fetchList, update } from '@/api/Permission/index'
+import { getItems, updateItems } from '@/api/Permission/index'
 
 const state = {
-  permission: {
-    items: []
-  }
+  groups: [],
+  permissions: [
+    {
+      name: "delete",
+      isGranted: true
+    }
+  ],
+  visible:false
 }
 const getters = {
-  permission: (state) => {
-    return state.permission;
+  groups: (state) => {
+    return state.groups;
   }
 }
 const mutations = {
-  setPermissions: (state, items) => {
-    state.permission.items = items
+  setPermissions: (state, groups) => {
+    state.groups = groups
+    console.log(groups);
+  },
+  toogleVisible:(state)=>{
+    state.visible = !state.visible
+  },
+  changeVisible:(state,visible)=>{
+    state.visible =visible
   }
 }
 
 const actions = {
-  update({ commit }, permission) {
+  setPermissions({commit,state}) {
+    console.log("更新权限设置");
     return new Promise((resolve, reject) => {
-      update(permission).then(response => {
-        commit('setItems', response.items)
+      updateItems(state.permissions).then(response => {
+        commit('setPermissions', response.groups)
         resolve()
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getPermissions({ commit }) {
+  getPermissions({ commit },item) {
     return new Promise((resolve, reject) => {
-      fetchList().then(response => {
-        commit('setPermissions', response)
+      console.log(item);
+      getItems(item.id,'U').then(response => {
+        commit('setPermissions', response.groups)
+        commit('changeVisible', true)
       }).catch(error => {
         reject(error)
       })

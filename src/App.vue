@@ -49,7 +49,7 @@
       onVisibilitychangeHandler() {
         this.$store.dispatch('app/onVisibilitychange', {}).then(() => {
           setTimeout(() => {
-            this.$confirm('Visibilitychange ？', '提示')
+            this.$confirm('Visibilitychange', '提示')
               .then(() => {
 
               })

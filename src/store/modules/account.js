@@ -10,7 +10,7 @@ const state = {
   roles: []
 }
 const getters = {
-  token: state => state.token,
+  token: state => window.localStorage.getItem("token"),
   avatar: state => state.avatar,
   name: state => state.name,
   roles: state => state.roles,
@@ -19,6 +19,7 @@ const getters = {
 const mutations = {
   setToken: (state, token) => {
     state.token = token
+    window.localStorage.setItem("token", token)
   },
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction

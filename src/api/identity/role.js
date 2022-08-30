@@ -1,12 +1,21 @@
 import request from '@/utils/request'
 
-export function getRoles() {
+export function getItems() {
   return request({
-    url: '/api/identity/roles',
+    url: '/api/identity/roles/all',
     method: 'GET'
   })
 }
-export function addRole(data) {
+
+
+export function getItem(id) {
+  return request({
+    url: `/api/identity/roles/${id}`,
+    method: 'GET'
+  })
+}
+
+export function addItem(data) {
   return request({
     url: '/api/identity/roles',
     method: 'POST',
@@ -14,16 +23,7 @@ export function addRole(data) {
   })
 }
 
-
-export function getRole(id) {
-  return request({
-    url: `/api/identity/roles/${id}`,
-    method: 'GET'
-  })
-}
-
-
-export function updateRole(id, data) {
+export function updateItem(id, data) {
   return request({
     url: `/api/identity/roles/${id}`,
     method: 'PUT',
@@ -31,7 +31,7 @@ export function updateRole(id, data) {
   })
 }
 
-export function deleteRole(id) {
+export function deleteItem(id) {
   return request({
     url: `/api/identity/roles/${id}`,
     method: 'DELETE'

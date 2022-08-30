@@ -16,7 +16,8 @@ service.interceptors.request.use(
     else {
 
     }
-    config.headers['Authorization'] = "Bearer " + store.state.account.token
+    const token = window.localStorage.getItem("token");
+    config.headers['Authorization'] = "Bearer " +token;// store.state.account.token
     // config.headers['xtenant'] = 'Mafeiyang'
     return config
   },

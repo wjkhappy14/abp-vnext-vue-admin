@@ -44,6 +44,17 @@
           </span>
         </el-form-item>
       </el-tooltip>
+      <el-form-item prop="token">
+          <el-input :key="token"
+                    ref="token"
+                    v-model="loginForm.token"
+                    placeholder="token"
+                    name="token"
+                    tabindex="3"
+                    autocomplete="off"
+                    @keyup.enter.native="saveToken"
+                    />
+        </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">确定</el-button>
       <div style="position:relative">
         <div class="tips">
@@ -55,6 +66,7 @@
 </template>
 
 <script>
+  import store from '../../store'
   import { validUsername } from '@/utils/validate'
   import SocialSign from './components/SocialSignin'
 
@@ -85,6 +97,7 @@
           client_id: "Awesome_Web",
           client_secret: "1q2w3e*"
         },
+        token:'',
         loginRules: {
           username: [{ required: true, trigger: 'blur', validator: validateUsername }],
           password: [{ required: true, trigger: 'blur', validator: validatePassword }]
@@ -145,7 +158,21 @@
           this.$refs.password.focus()
         })
       },
+      saveToken(){
+        console.log(this.token);
+        window.localStorage.setItem("token",this.token);
+      },
       handleLogin() {
+        const token = window.localStorage.getItem("token");
+        console.log(store.state.account);
+        if(token)
+        {
+          this.$router.push({
+                  path: this.redirect || '/',
+                  query: this.otherQuery
+                })
+                return;
+        }
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             this.loading = true

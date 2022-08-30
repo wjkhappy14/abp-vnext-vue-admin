@@ -1,18 +1,17 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function getItems(key,name) {
   return request({
-    url: '/api/permission-management/permissions?providerName=R&providerKey=admin',
+    url: '/api/permission-management/permissions',
     method: 'GET',
-    params: query
+    params: {providerKey:key,providerName:name}
   })
 }
 
-
-export function update(options) {
+export function updateItems(permissions) {
   return request({
     url: '/api/permission-management/permissions',
     method: 'PUT',
-    options
+    data:permissions
   })
 }

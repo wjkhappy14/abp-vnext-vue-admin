@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-button type="primary" icon="el-icon-plus" @click="addRoleHandler">新建角色</el-button>
     <el-button type="primary" icon="el-icon-delete" @click="deleteRoleHandler">批量删除</el-button>
-    <el-table :data="roles"
+    <el-table :data="items"
               row-key="id"
               element-loading-text="加载中..."
               style="width: 100%;margin-top:30px;" border>
@@ -30,7 +30,7 @@
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'修改角色':'创建角色'">
       <div>
-        <el-tree :data="permissions"
+        <el-tree :data="items"
                  show-checkbox
                  node-key="name"
                  accordion
@@ -59,7 +59,6 @@
           disabled: 'isGranted',
           children: 'permissions'
         },
-        permissions: [],
         form: {},
         dialogVisible: false,
         dialogType: 'new',
@@ -68,29 +67,30 @@
     },
     computed: {
       routesData() {
-        return this.routes
+        return []
       },
-      //...mapState(["identity/role/token"]),
+      ...mapState({
+         items: state => state.identity.role.items,
+        }),
       ...mapGetters({
-        roles: 'identity/role/roles'
+        count: 'identity/role/count'
       })
 
     },
     created() {
-    
-      this.getRoles();
+      this.getRoles().then(()=>{
+        console.log(this.items)
+      });
     },
     methods: {
       ...mapActions({
-        
         getRoles: "identity/role/getRoles",
         deleteRole: "identity/role/deleteRole",
         addRole: "identity/role/addRole",
         updateRole: "identity/role/updateRole",
-        getPermissions: "identity/grant/getPermissions",
       }),
       ...mapMutations({
-        toggleUserFlag: "role/toggleUserFlag"
+        sort: "identity/role/sort",
       }),
 
       addRoleHandler() {
