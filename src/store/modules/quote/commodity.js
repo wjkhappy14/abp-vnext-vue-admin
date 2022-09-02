@@ -1,25 +1,28 @@
-import { fetchList, update } from '@/api/IdentityServer/client'
+import { getItems, addItem,updateItem,deleteItem} from '@/api/quote/commodity'
 
 const state = {
-  client: {
-    items: []
+  items: [],
+  query:{
+    Sorting:"id asc",
+    SkipCount:0,
+    MaxResultCount:500
   }
 }
 const getters = {
-  client: (state) => {
-    return state.client;
+  items: (state) => {
+    return state.items;
   }
 }
 const mutations = {
-  setClients: (state, items) => {
-    state.client.items = items
+  setItems: (state, items) => {
+    state.items = items
   }
 }
 
 const actions = {
-  update({ commit }, permission) {
+  updateItem({ commit }, item) {
     return new Promise((resolve, reject) => {
-      update(permission).then(response => {
+      updateItem(item).then(response => {
         commit('setItems', response.items)
         resolve()
       }).catch(error => {
@@ -27,10 +30,10 @@ const actions = {
       })
     })
   },
-  getClients({ commit }) {
+  getItems({ commit,state }) {
     return new Promise((resolve, reject) => {
-      fetchList().then(response => {
-        commit('setClients', response)
+      getItems(state.query).then(response => {
+        commit('setItems', response.items)
       }).catch(error => {
         reject(error)
       })

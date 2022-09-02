@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 import account from './modules/account'
 import identity from './modules/identity'
-import identityServer from './modules/identityServer'
+import quote from './modules/quote'
 import app from './modules/app'
 import permission from './modules/permission'
 import errorLog from './modules/errorLog'
@@ -34,7 +34,7 @@ const store = new Vuex.Store({
     policy,
     permission,
     menu,
-    identityServer,
+    quote,
     blogging,
     region,
     summary,

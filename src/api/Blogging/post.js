@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function getItems(blogId,tagName) {
   return request({
-      url: '/api/blogging/posts/5602718F-1FC5-1DE8-0C70-39F152398A16/all',
-    method: 'get',
-    params: query
+      url: `/api/blogging/posts/${blogId}/all`,
+    method: 'GET',
+    params: tagName
   })
 }
 

@@ -12,7 +12,7 @@ import bloggingRouter from './modules/blogging'
 import permissionRouter from './modules/permission'
 import backgroundJobRouter from './modules/backgroundJob'
 import auditLoggingRouter from './modules/auditLogging'
-import identityServerRouter from './modules/identityServer'
+import quoteRouter from './modules/quote'
 
 export const constantRoutes = [
   {
@@ -73,7 +73,7 @@ export const asyncRoutes = [
   identityRoutes,
   backgroundJobRouter,
   auditLoggingRouter,
-  identityServerRouter,
+  quoteRouter,
   productionRouter,
   bloggingRouter,
   permissionRouter,

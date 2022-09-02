@@ -1,9 +1,10 @@
 <template>
   <div class="app-container">
     <el-input v-model="filename" placeholder="输入关键字" style="width:350px;" prefix-icon="el-icon-document" />
-      <el-table ref="multipleTable"
+      <el-table ref="eztv-grid"
                 v-loading="listLoading"
                 :data="list"
+                fit="true"
                 height="850"
                 element-loading-text="正在加载..."
                 :border=true
@@ -16,12 +17,12 @@
             {{ scope.$index+1 }}
           </template>
         </el-table-column>
-        <el-table-column label="File Name" align="left" width="180">
+        <el-table-column label="File Name" align="left">
           <template slot-scope="scope">
             {{ scope.row.filename }}
           </template>
         </el-table-column>
-        <el-table-column label="Title" width="180" align="left">
+        <el-table-column label="Title" width="240" align="left">
           <template slot-scope="scope">
             <span>{{ scope.row.title }}</span>
           </template>
@@ -70,11 +71,11 @@
     components: { Pagination },
     data() {
       return {
-        total: 0,
+        total: 100,
         list: [],
         query: {
         page: 1,
-        limit: 5,
+        limit: 50,
         title: undefined,
         sort: '+id'
       },

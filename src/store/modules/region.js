@@ -99,7 +99,7 @@ const getters = {
   }
 }
 const mutations = {
-  settCountries: (state, items) => {
+  setCountries: (state, items) => {
     let groups = groupBy(items, "continent");
     state.country.groups = groups;// castArray(groups);
     state.country.items = items;
@@ -206,7 +206,7 @@ const actions = {
   getCountries({ commit }) {
     return new Promise((resolve, reject) => {
       getCountries().then(response => {
-        commit('setCountry', response.items)
+        commit('setCountries', response)
         commit('buildTree', 1)
         const observable = interval(1000);
       }).catch(error => {

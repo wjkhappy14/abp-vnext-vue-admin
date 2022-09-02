@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-tabs v-model="activeName" @tab-click="tabClickHandler">
       <el-tab-pane label="Client" name="client">
-        <el-table v-loading="listLoading" :data="apiResource.items" element-loading-text="Loading..." border fit highlight-current-row>
+        <el-table v-loading="isLoading" :data="items" element-loading-text="Loading..." border fit highlight-current-row>
           <el-table-column align="center" label="Id" width="45">
             <template slot-scope="scope">
               {{ scope.$index }}
@@ -13,19 +13,54 @@
               {{ scope.row.name }}
             </template>
           </el-table-column>
-          <el-table-column label="Description" width="180" align="left">
+          <el-table-column label="commodityNo" width="150" align="left">
             <template slot-scope="scope">
-              <el-tag>{{ scope.row.description }}</el-tag>
+              <el-tag>{{ scope.row.commodityNo }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="Enabled" width="80" align="left">
+          <el-table-column label="contractNo" width="80" align="left">
             <template slot-scope="scope">
-              {{ scope.row.enabled }}
+              {{ scope.row.contractNo }}
             </template>
           </el-table-column>
-          <el-table-column align="left" label="DisplayName" width="180">
+          <el-table-column align="left" label="Symbol" width="80">
             <template slot-scope="scope">
-              <span>{{ scope.row.displayName}}</span>
+              <span>{{ scope.row.symbol}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="left" label="highPrice" width="80">
+            <template slot-scope="scope">
+              <span>{{ scope.row.highPrice}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="left" label="lowPrice" width="80">
+            <template slot-scope="scope">
+              <span>{{ scope.row.lowPrice}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="left" label="openPrice" width="120">
+            <template slot-scope="scope">
+              <span>{{ scope.row.openPrice}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="left" label="volume" width="80">
+            <template slot-scope="scope">
+              <span>{{ scope.row.volume}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="left" label="lastPrice" width="80">
+            <template slot-scope="scope">
+              <span>{{ scope.row.lastPrice}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="left" label="totalQty" width="80">
+            <template slot-scope="scope">
+              <span>{{ scope.row.totalQty}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="left" label="askSize" width="80">
+            <template slot-scope="scope">
+              <span>{{ scope.row.askSize}}</span>
             </template>
           </el-table-column>
           <el-table-column align="left" label="操作" width="120">
@@ -57,7 +92,7 @@
   import { parseTime } from '@/utils'
 
   export default {
-    name: 'ExportExcel',
+    name: 'contract-grid',
     data() {
       return {
         listLoading: false,
@@ -67,18 +102,19 @@
     },
     computed: {
       ...mapGetters({
-        apiResource: 'identityServer/apiResource/apiResource'
+        items: 'quote/contract/items',
+        query: 'quote/contract/query',
       }),
       ...mapState({
-        users: state => state
+        isLoading: state => state.quote.contract.isLoading,
       })
     },
     created() {
-      this.getApiResources()
+      this.getItems()
     },
     methods: {
       ...mapActions({
-        getApiResources: "identityServer/apiResource/getApiResources"
+        getItems: "quote/contract/getItems"
       }),
       tabClickHandler() {
 

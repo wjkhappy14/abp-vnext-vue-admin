@@ -1,5 +1,5 @@
 import bus from '@/utils/bus'
-import { fetchList, create, deleteItem } from '@/api/Blogging/post'
+import { getItems, create, deleteItem } from '@/api/Blogging/post'
 import { range } from "rxjs";
 import { map, filter } from "rxjs/operators";
 
@@ -44,8 +44,8 @@ const actions = {
     })
   },
 
-  getItems({ commit, state }) {
-    return fetchList().then(response => {
+  getItems({ commit, state },item) {
+    return getItems(item.id).then(response => {
       commit('setItems', response.items);
       range(1, 20)
         .pipe(

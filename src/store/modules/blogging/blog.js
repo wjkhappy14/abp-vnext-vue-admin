@@ -1,11 +1,13 @@
 import bus from '@/utils/bus'
-import { fetchList, create, deleteItem } from '@/api/Blogging/blog'
+import { getItems, addItem,updateItem, deleteItem } from '@/api/Blogging/blog'
 import { range } from "rxjs";
 import { map, filter } from "rxjs/operators";
 
 const state = {
   items: [],
-  count: 0
+  count: 0,
+  selected:{},
+  isLoading:false
 }
 
 const getters = {
@@ -19,13 +21,17 @@ const mutations = {
   },
   removeItem: (state, item) => {
 
+  },
+  itemSelected:(state,row)=>
+  {
+    state.selected=state.items.find(v => v.id == row.id);
   }
 }
 
 const actions = {
   addItem({ commit }, blog) {
     return new Promise((resolve, reject) => {
-      create(blog).then(response => {
+      addItem(blog).then(response => {
         commit('setItems', response)
         resolve()
       }).catch(error => {
@@ -35,7 +41,7 @@ const actions = {
   },
   updateItem({ commit }, blog) {
     return new Promise((resolve, reject) => {
-      updateUser(blog).then(response => {
+      updateItem(blog).then(response => {
         commit('setItems', response.access_token)
         resolve()
       }).catch(error => {
@@ -45,7 +51,7 @@ const actions = {
   },
 
   getItems({ commit, state }) {
-    return fetchList().then(response => {
+    return getItems().then(response => {
       commit('setItems', response.items);
       range(1, 20)
         .pipe(
@@ -65,6 +71,13 @@ const actions = {
         showClose: true,
         position: 'bottom-right'
       });
+    });
+  },
+  viewPosts({ commit, dispatch }, item)
+  {
+    dispatch('blogging/post/getItems', item, {root: true}).then(res=>{
+
+
     });
   }
 }
